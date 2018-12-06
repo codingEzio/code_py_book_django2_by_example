@@ -2,8 +2,14 @@
 # My own 
 .idea
 ._*
+
+# env folder
 env
+Part*/env
+Project*/env
 Chapter*/env
+
+# other
 __pycache__
 .vscode
 .DS_Store
