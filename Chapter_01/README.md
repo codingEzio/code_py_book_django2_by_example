@@ -55,4 +55,8 @@
 - One last step, we need to **see** this at frontend (at least in *admin*!)
     - Edit **blog/admin.py**
         1. import models: ```from .models import Post```
-        2. register to admin: ```admin.site.register(Post)```
+        2. register to admin: ```admin.site.register(Post)``` (this'll be refactored soon)
+        
+### Customizing our admin model
+- Just go see the ```blog/admin.py``` (lots of notes in there!)
+
