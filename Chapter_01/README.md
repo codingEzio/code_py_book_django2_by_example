@@ -42,3 +42,13 @@
     - each app *need to have one*, while this file *could be left empty* 
 - ```views.py```
     - receive -> process -> return 
+    
+### Let's design the schema for the 'blog' app
+- Apparently, we need to write the ```models.py``` of related apps. 
+- After we've finished, we need to **migrate** it. 
+    1. first let Django knows ur app (**INSTALLED_APPS** in **settings.py**)
+    2. then the ```makemigrates``` would applies for **all apps listed in it** <small>(*INSTALLED_APPS*)</small>
+- About the *migrating* (example)
+    - make it by ```./manage.py makemigrations blog```
+    - check sql by ```./manage.py``` **```sqlmigrate```** ```blog 0001``` (not exec)
+    - do migrate by ```./manage.py migrate```

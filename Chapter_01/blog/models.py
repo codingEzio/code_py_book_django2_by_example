@@ -1,3 +1,83 @@
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
 
-# Create your models here.
+
+class Post(models.Model):
+    """
+        Trans to DB
+            CharField   VARCHAR
+            TextField   TEXT
+        
+        SlugField
+            A short label for sth, used in URLs, [a-zA-Z_-] only
+            It's possible that multiple posts got same slug,
+                so it's better add a 'unique' factor, e.g. a date'd be nice
+            
+            e.g.
+                stackoverflow.com/.../what-is-a-slug-in-django
+        
+        ForeignKey
+            The params (of var 'author') are related to this (fk).
+            
+            on_delete=models.CASCADE
+                for our cases, it's <one-author> TO <many-posts>
+                so when a user is deleted => his/her posts were deleted as well
+            
+            related_name
+                quote: "easily access the related objects"
+                
+                the value "blog_posts"
+                    blog    app name
+                    posts   table name (same as class's name in models.py)
+                    
+            One more words,
+                you CAN override the default primary key (aka ID)
+                just add `primary_key=True` to one of ur model fields.
+                
+        The three time-related params
+            timezone.now    timezone-aware version of 'datetime.now'
+            auto_now_add    auto add the time when the object is created
+            auto_now        the last time the obj was updated (update when saving)
+        
+        choices
+            I'll update the notes when I'm starting to use this one (frontend)
+    """
+    
+    STATUS_CHOICES = (
+        ('draft', 'Draft'),
+        ('published', 'Published'),
+    )
+    
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250,
+                            unique_for_date='publish')
+    author = models.ForeignKey(User,
+                               on_delete=models.CASCADE,
+                               related_name='blog_posts')
+    body = models.TextField()
+    
+    publish = models.DateTimeField(default=timezone.now)
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    status = models.CharField(max_length=10,
+                              choices=STATUS_CHOICES,
+                              default='draft')
+    
+    class Meta:
+        """
+            Quote
+                "Give your model metadata by using an inner 'Meta' class"
+            
+            What variables can be used?
+                Go check the doc of 'django.db.models.Options'.
+                This inner class could do a large influences in the 'param' part.
+            
+            The val ('-publish') means
+                ordering by 'publish' by DESC (there's also publish, ?publish)
+        """
+        
+        ordering = ('-publish',)
+    
+    def __str__(self):
+        return self.title
