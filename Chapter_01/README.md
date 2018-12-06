@@ -52,3 +52,7 @@
     - make it by ```./manage.py makemigrations blog```
     - check sql by ```./manage.py``` **```sqlmigrate```** ```blog 0001``` (not exec)
     - do migrate by ```./manage.py migrate```
+- One last step, we need to **see** this at frontend (at least in *admin*!)
+    - Edit **blog/admin.py**
+        1. import models: ```from .models import Post```
+        2. register to admin: ```admin.site.register(Post)```
