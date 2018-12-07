@@ -68,4 +68,4 @@
     - A view is just *a function receives a request* then *returns a web response*.
     - All **the logic to return** the *desired* response goes inside the view. 
 - One photo for current status (displaying post-list & indiv-post)
-    - ![](../img/img_chapter_01/0001_procedure.jpg)
+    - <img src="../img/img_chapter_01/0001_procedure.jpg" width=50% height=50%>
