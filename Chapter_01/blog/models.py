@@ -3,6 +3,25 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 
 
+class PublishedManager(models.Manager):
+    """
+        This class is for customizing our own "manager" :P
+        
+        For the methods down below,
+            we're overriding it to include our own filter in the result.
+            
+        There're three things happened
+            1. Inherit the 'Manager' superclass (got its methods)
+            2. Rewriting method (then we got a customized result set)
+            3. Ready for use (Post.XX.all() depends on a variable name))
+    """
+    
+    def get_queryset(self):
+        return super(PublishedManager, self) \
+            .get_queryset() \
+            .filter(status='draft')
+
+
 class Post(models.Model):
     """
         Trans to DB
@@ -63,6 +82,13 @@ class Post(models.Model):
     status = models.CharField(max_length=10,
                               choices=STATUS_CHOICES,
                               default='draft')
+    
+    objects = models.Manager()
+    
+    # TABLE_AND_ALSO_MODEL_NAME
+    #   .VARIABLE   (i.e. published)
+    #   .METHOD     (e.g. all() )
+    published = PublishedManager()
     
     class Meta:
         """
