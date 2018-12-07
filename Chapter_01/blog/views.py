@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from .models import Post
 
@@ -9,7 +10,18 @@ def post_list(request):
         The `request` here is required (for all views).
     """
     
-    posts = Post.published.all()
+    object_list = Post.published.all()
+    paginator = Paginator(object_list, 3)  # 3p/page
+    
+    # current page num
+    page = request.GET.get('page')
+    
+    try:
+        posts = paginator.page(page)  # N pages / 3
+    except PageNotAnInteger:
+        posts = paginator.page(1)  # invalid (param) => 1st page
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)  # too big => last page
     
     return render(
         request,  # required
