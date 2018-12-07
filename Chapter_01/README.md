@@ -1,6 +1,7 @@
 
 ### Note
 - Some dead-simple basics won't be mentioned :P 
+- Not clear about it? ***READ THE FUCKING DOC***! 
 
 ### Setup only 
 - ```django-admin startproject mysite .```
@@ -60,3 +61,11 @@
 ### Customizing our admin model
 - Just go see the ```blog/admin.py``` (lots of notes in there!)
 
+-----------
+
+### Here comes the *View* part 
+- Simply put, 
+    - A view is just *a function receives a request* then *returns a web response*.
+    - All **the logic to return** the *desired* response goes inside the view. 
+- One photo for current status (displaying post-list & indiv-post)
+    - ![](../img/img_chapter_01/0001_procedure.jpg)
