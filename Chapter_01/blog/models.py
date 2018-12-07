@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 class PublishedManager(models.Manager):
@@ -14,6 +15,11 @@ class PublishedManager(models.Manager):
             1. Inherit the 'Manager' superclass (got its methods)
             2. Rewriting method (then we got a customized result set)
             3. Ready for use (Post.XX.all() depends on a variable name))
+            
+        Lastly, for the commands I skipped,
+        #TODO
+            Type it, test it, understand it, then *taking notes* in 'README_queryset.md'.
+            These 3 lines should be deleted after the notes were taken :P
     """
     
     def get_queryset(self):
@@ -107,3 +113,13 @@ class Post(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def get_absolute_url(self):
+        """ Generating nice (& SEO-friendly) urls (directly related to 'urls.py')
+        """
+        
+        return reverse('blog:post_detail',
+                       args=[self.publish.year,
+                             self.publish.month,
+                             self.publish.day,
+                             self.slug])
