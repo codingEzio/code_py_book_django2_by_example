@@ -1,7 +1,9 @@
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
+
 from .models import Post
+from .forms import EmailPostForm
 
 
 class PostListView(ListView):
@@ -59,11 +61,8 @@ def post_list(request):
     except EmptyPage:
         posts = paginator.page(paginator.num_pages)  # too big => last page
     
-    return render(
-        request,  # required
-        'blog/post/list.html',  # template path
-        {'posts': posts}  # context name (aha!)
-    )
+    return render(request,
+                  'blog/post/list.html', {'posts': posts})
 
 
 def post_detail(request, year, month, day, post):
@@ -73,8 +72,34 @@ def post_detail(request, year, month, day, post):
                              publish__month=month,
                              publish__day=day)
     
-    return render(
-        request,
-        'blog/post/detail.html',
-        {'post': post},
-    )
+    return render(request,
+                  'blog/post/detail.html', {'post': post}, )
+
+
+def post_share(request, post_id):
+    """
+        GET     ->  display a empty form
+        
+        POST    ->  submit ur data
+                ->  validate by 'is_valid'
+                    =>  error   ->  raise it
+                    =>  no?     ->  get the data (var 'cd')
+                
+        Now there's only the last line,
+            it is simply rendering what we need.
+    """
+    
+    post = get_object_or_404(Post, id=post_id, status='draft')
+    
+    if request.method == 'POST':
+        form = EmailPostForm(request.POST)
+        
+        if form.is_valid():
+            cd = form.cleaned_data
+    
+    else:
+        form = EmailPostForm()
+    
+    return render(request,
+                  'blog/post/share.html', {'post': post,
+                                           'form': form})
