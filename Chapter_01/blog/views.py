@@ -1,6 +1,42 @@
+from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 from .models import Post
+
+
+class PostListView(ListView):
+    """
+        By using A LOT of 'class-inheritence' & 'mixins',
+            a much less code for us to write out the same feature :P
+            
+        Down below we're just
+            (over)writing the attrs & method of (multiple) superclasses.
+            
+        For the conv between func-based and class-based,
+            in our cases, there's not much to changed (it's quite intuitive).
+        
+        Here's something not THAT INTUITIVE,
+            the 'paginator' object used in templates (views-code <-> template)
+            
+            In func-based ways, the object of 'paginator'
+                was assigned to a variable that called 'posts'.
+            
+            In here, it depends on the (might be multi-levels) superclasses
+                it's not that easy
+                    to (customize) name a better context name
+                    which is specifically for 'paginator' object
+            So ...
+                what we CAN do is to use the name provided by the superclass
+                
+            For the 'paginator',
+                now you should change the 'posts' (inside `def post_list`)
+                to 'page_obj' (where? ./blog/templates/blog/post/list.html)
+    """
+    model = Post
+    queryset = Post.published.all()
+    context_object_name = 'posts'
+    paginate_by = 3
+    template_name = 'blog/post/list.html'
 
 
 def post_list(request):

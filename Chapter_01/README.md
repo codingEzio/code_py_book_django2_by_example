@@ -63,9 +63,22 @@
 
 -----------
 
-### Here comes the *View* part 
+### Here comes the **View** part (func-based)
 - Simply put, 
     - A view is just *a function receives a request* then *returns a web response*.
     - All **the logic to return** the *desired* response goes inside the view. 
 - One photo for current status (displaying post-list & indiv-post)
     - <img src="../img/img_chapter_01/0001_procedure.jpg" width=50% height=50%>
+    
+### Here comes the *another* one (class-based)
+- Some good features for it 
+    1. Organizing code related to specific kinds of methods (e.g ```GET```, ```POST```). 
+    2. Using multiple inheritance to create **reusable classes** (aka **Mixins**). 
+    3. ***Writing less code*** 😅
+- So.. the old codes will be *rewritten using new ways*! 
+    
+    | FILE | CHANGE | ELSE | 
+    | :--- | :--- | :---- | 
+    | ```blog/views.py``` | *a new class* | with other class being imported |
+    | ```blog/urls.py``` | *a new route* | old being commented out |
+    | ```list.html``` | *change the paginator's obj name* | in the templates folder |
