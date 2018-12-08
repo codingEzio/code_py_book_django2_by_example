@@ -22,7 +22,6 @@
     | ```QuerySet``` | simply **SELECT** in *SQL* | 
     | ```filter``` | e.g. **WHERE**, **LIMIT** in *SQL* | 
 
-
 ### Some guessing (to be clarified)
 1. manager
     - Model's classname 🗣 Manager (Post.objects => Post.a_more_intuitive_name)
