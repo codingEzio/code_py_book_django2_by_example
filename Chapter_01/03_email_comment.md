@@ -39,4 +39,14 @@
         - configure the backend (whether it’s a real one or not)
 
 ### And let’s create the bloody 😙 comment system! 
-- 
+- Actually I don't like the word '*system*' much, we'll use it anyway 😷 
+- Let's follow the todo list :P 
+    1. [x] a new model for saving comments 
+    2. [ ] a form to submit & validate the input 
+    3. [ ] a view that process the form & save the comment to DB 
+    4. [ ] edit the template to display the comments & the form (post_detail)
+- Modifying the ```models.py``` first XD
+    - Write it (details were inside the code!)
+    - Make migrations (sync -> DB)
+        1. ```./manage.py makemigrations blog```
+        2. ```./manage.py migrate``` 
