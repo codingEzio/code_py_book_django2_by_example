@@ -8,6 +8,8 @@ from .forms import EmailPostForm, CommentForm
 
 from taggit.models import Tag
 
+from django.db.models import Count
+
 import os
 import sys
 
@@ -82,9 +84,9 @@ def post_list(request, tag_slug=None):
         posts = paginator.page(paginator.num_pages)  # too big => last page
     
     return render(request,
-                  'blog/post/list.html', {'posts': posts,
-                                          'page' : page,
-                                          'tag'  : tag})
+                  'blog/post/list.html', { 'posts': posts,
+                                           'page' : page,
+                                           'tag'  : tag })
 
 
 def post_detail(request, year, month, day, post):
@@ -102,6 +104,38 @@ def post_detail(request, year, month, day, post):
                 ->  GET     ->  display form
                 ->  POST    ->  check   ->  True    ->  `save` to DB
                                         ->  False   ->  exec the last line
+                                        
+        Later we added a new feature: 'Tagging'.
+            Beyond that, we also could use it for "recommending" related posts.
+            
+        Just remember that, whenever you're overwhelmed,
+            it's just concept, and concepts build on concepts, that's all
+            
+            For the 'recommending' part, frankly,
+                I myself felt a bit frustrated (e.g. I've never seen this var!)
+                
+            Well, the shitty talk ends here, let's get to the real business.
+            
+        For the changes for 'recommending' feature (current file only)
+            there's just 4 line changes (first 3 for logic, the last is rendering)
+            
+            Down below is my own understanding #TODO clarify needed
+            
+            post_tag_ids
+                1. cuz we're in the `post_detail`,
+                    we ?could easily get infos of the current post
+                
+                2. so the `post.tags.values_list` is NOT that unreasonable
+                    it's just "current-post => its tags => those tag IDs"
+                    
+                3. okay, now we got the tags ID(s), let's continue :P
+                
+            X.y.filter().exclude()
+                1. get all posts of specific tag ID ("post_tag_ids"'s job)
+                2. exclude current post itself (i.e. not recmd the one ur reading)
+                
+            x.annotate(same_tags=Count('tags'))
+                1. we could use `x` & `x.some_tags` #TODO clarify needed
     """
     
     # Post content
@@ -127,11 +161,23 @@ def post_detail(request, year, month, day, post):
     else:
         comment_form = CommentForm()
     
+    # List of similar posts
+    post_tag_ids = post.tags.values_list('id', flat=True)
+    
+    similar_posts = Post.published \
+        .filter(tags__in=post_tag_ids) \
+        .exclude(id=post.id)
+    
+    similar_posts = similar_posts \
+                        .annotate(same_tags=Count('tags')) \
+                        .order_by('-same_tags', '-publish')[:4]
+    
     return render(request,
-                  'blog/post/detail.html', {'post'        : post,
-                                            'comments'    : comments,
-                                            'new_comment' : new_comment,
-                                            'comment_form': comment_form})
+                  'blog/post/detail.html', { 'post'         : post,
+                                             'comments'     : comments,
+                                             'new_comment'  : new_comment,
+                                             'comment_form' : comment_form,
+                                             'similar_posts': similar_posts })
 
 
 def post_share(request, post_id):
@@ -159,23 +205,23 @@ def post_share(request, post_id):
             post_url = request.build_absolute_uri(post.get_absolute_url())
             
             subject = '{} ({}) recommends you reading "{}"'.format(
-                input_email_data['name'],
-                input_email_data['email'],
-                post.title
+                    input_email_data['name'],
+                    input_email_data['email'],
+                    post.title
             )
             
             message = 'Read "{}" at {}\n\n{}\'s comments: {}'.format(
-                post.title,
-                post_url,
-                input_email_data['name'],
-                input_email_data['comments']
+                    post.title,
+                    post_url,
+                    input_email_data['name'],
+                    input_email_data['comments']
             )
             
             send_mail(
-                subject,
-                message,
-                sensitive.EMAIL_HOST_USER,  # from
-                [input_email_data['to']]  # to
+                    subject,
+                    message,
+                    sensitive.EMAIL_HOST_USER,  # from
+                    [input_email_data['to']]    # to
             )
             sent = True
     
@@ -183,6 +229,6 @@ def post_share(request, post_id):
         form = EmailPostForm()
     
     return render(request,
-                  'blog/post/share.html', {'post': post,
-                                           'form': form,
-                                           'sent': sent})
+                  'blog/post/share.html', { 'post': post,
+                                            'form': form,
+                                            'sent': sent })

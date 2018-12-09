@@ -42,3 +42,25 @@
     - ```urls.py``` 
 - then its templates file 
     - ```list.html```
+    
+    
+----------
+    
+### Now let's retrieving posts by ***similarity*** 
+- < ***same ID means similarity, at least in here*** > 
+- Lemme get a todo-list first 😇 
+    - [x] retrieve all tags fro the current post 
+    - [x] get all posts that are tagged with any of those tags 
+    - [x] exclude the current post from the recommended posts 
+    - [x] order the results by the num of tags shared with the current post 
+    - [x] in case 2+ posts with the same num of tags, recommended the most recent one 
+    - [x] limit the query to the number of posts we want to recommended 
+- Only two files were related 
+    - ```views.py```
+    - ```detail.html```
+- Simply a chain (kinda correspond to the code!)
+    1. tag ID of the current post 
+    2. get its related posts (not include itself)
+    3. limiting the number of recommended posts 
+    4. rendering (& passed to templates as vars) it 
+    5. iterating it in templates (& get its own "absolute url", so u can click it)
