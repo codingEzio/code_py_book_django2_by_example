@@ -50,3 +50,5 @@
     - Make migrations (sync -> DB)
         1. ```./manage.py makemigrations blog```
         2. ```./manage.py migrate``` 
+- And edit the ```admin.py``` 
+    - which enables it being displayed on the admin page (better control)
