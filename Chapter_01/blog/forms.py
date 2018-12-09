@@ -1,4 +1,5 @@
 from django import forms
+from .models import Comment
 
 
 class EmailPostForm(forms.Form):
@@ -16,3 +17,21 @@ class EmailPostForm(forms.Form):
     to = forms.EmailField()
     comments = forms.CharField(required=False,
                                widget=forms.Textarea)
+    
+    
+class CommentForm(forms.ModelForm):
+    """
+        A little diff from before,
+            the forms we'll use was inside the 'models',
+            so we need change the 'forms.Form' => 'forms.ModelForm'.
+    """
+    
+    class Meta:
+        """
+            The variables here indicates
+                1. 'model'  ->  where to get the forms
+                2. 'fields' ->  what forms should be let fill-in
+        """
+        
+        model = Comment
+        fields = ('name', 'email', 'body')
