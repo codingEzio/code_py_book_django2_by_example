@@ -18,7 +18,7 @@ class PublishedManager(models.Manager):
             
         Lastly, for the commands I skipped,
         #TODO
-            Type it, test it, understand it, then *taking notes* in 'README_queryset.md'.
+            Type it, test it, understand it, then *taking notes* in '02_queryset.md'.
             These 3 lines should be deleted after the notes were taken :P
     """
     
@@ -66,7 +66,8 @@ class Post(models.Model):
             auto_now        the last time the obj was updated (update when saving)
         
         choices
-            I'll update the notes when I'm starting to use this one (frontend)
+            The '__Field' is just widgets of HTML,
+            so the "choices" might be the vals of 'select/option' in HTML.
     """
     
     STATUS_CHOICES = (
