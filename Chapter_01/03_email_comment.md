@@ -42,9 +42,9 @@
 - Actually I don't like the word '*system*' much, we'll use it anyway 😷 
 - Let's follow the todo list :P 
     1. [x] a new model for saving comments 
-    2. [ ] a form to submit & validate the input 
-    3. [ ] a view that process the form & save the comment to DB 
-    4. [ ] edit the template to display the comments & the form (post_detail)
+    2. [x] a form to submit & validate the input 
+    3. [x] a view that process the form & save the comment to DB 
+    4. [x] edit the template to display the comments & the form (post_detail)
 - Modifying the ```models.py``` first XD
     - Write it (details were inside the code!)
     - Make migrations (sync -> DB)
@@ -52,3 +52,21 @@
         2. ```./manage.py migrate``` 
 - And edit the ```admin.py``` 
     - which enables it being displayed on the admin page (better control)
+- And the ```forms.py```
+    - we'll use the *forms* **from the ```models.py```**
+- And the ```views.py```
+    - import 
+        - **Comment** in ```models.py```
+        - **CommentForm** in ```forms.py```
+    - edit the ```post_detail``` (where *comment* should appear)
+        - do the right thing for ```POST```, ```GET```
+        - query the data (for templates using it)
+        - display the form (comment)
+    - Oh! There's one line you might be interested 
+        - The ```post.comments.filter(active=True)``` line
+        - that indicates if you change the state of ```active``` in admin (or DB)
+            - the comments are (sort of) deleted (or sayin' 😏 "filtered out" )
+- And the template: ```detail.html```
+    1. how many posts (display as "N comments")
+    2. comment concent (display as "Nth, By who, when & content itself")
+    3. comment-form OR info (display as "form" OR "ur xx has been added")
