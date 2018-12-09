@@ -3,15 +3,16 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 
-
-from .models import Post
-from .forms import EmailPostForm
+from .models import Post, Comment
+from .forms import EmailPostForm, CommentForm
 
 import os
 import sys
+
 sys.path.append(os.path.abspath('../..'))
 
 import sensitive
+
 
 class PostListView(ListView):
     """
@@ -73,14 +74,50 @@ def post_list(request):
 
 
 def post_detail(request, year, month, day, post):
+    """
+        Two parts: content &  comment section.
+        
+        This function very similar to `post_share`.
+        
+        Content ->  get =>  True    ->  render it
+                        =>  False   ->  404
+                        
+        Comment
+            1. existed comments (`post.comments.filter` & `comments`)
+            2. words to submit
+                ->  GET     ->  display form
+                ->  POST    ->  check   ->  True    ->  `save` to DB
+                                        ->  False   ->  exec the last line
+    """
+    
+    # Post content
     post = get_object_or_404(Post, slug=post,
                              status='draft',
                              publish__year=year,
                              publish__month=month,
                              publish__day=day)
     
+    # Comment part
+    comments = post.comments.filter(active=True)
+    new_comment = None
+    
+    if request.method == 'POST':
+        
+        comment_form = CommentForm(data=request.POST)
+        
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.save()
+    
+    else:
+        comment_form = CommentForm()
+    
     return render(request,
-                  'blog/post/detail.html', {'post': post})
+                  'blog/post/detail.html', {'post'        : post,
+                                            'comments'    : comments,
+                                            'new_comment' : new_comment,
+                                            'comment_form': comment_form})
 
 
 def post_share(request, post_id):
@@ -124,10 +161,10 @@ def post_share(request, post_id):
                 subject,
                 message,
                 sensitive.EMAIL_HOST_USER,  # from
-                [input_email_data['to']]    # to
+                [input_email_data['to']]  # to
             )
             sent = True
-            
+    
     else:
         form = EmailPostForm()
     
