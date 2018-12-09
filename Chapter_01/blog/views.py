@@ -6,6 +6,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Post, Comment
 from .forms import EmailPostForm, CommentForm
 
+from taggit.models import Tag
+
 import os
 import sys
 
@@ -49,14 +51,24 @@ class PostListView(ListView):
     template_name = 'blog/post/list.html'
 
 
-def post_list(request):
+def post_list(request, tag_slug=None):
     """
         Oh! This is the function-based views!
         
         The `request` here is required (for all views).
     """
     
+    # Query
     object_list = Post.published.all()
+    
+    # Tag
+    tag = None
+    
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        object_list = object_list.filter(tags__in=[tag])
+    
+    # Paginator
     paginator = Paginator(object_list, 3)  # 3p/page
     
     # current page num
@@ -70,7 +82,9 @@ def post_list(request):
         posts = paginator.page(paginator.num_pages)  # too big => last page
     
     return render(request,
-                  'blog/post/list.html', {'posts': posts})
+                  'blog/post/list.html', {'posts': posts,
+                                          'page' : page,
+                                          'tag'  : tag})
 
 
 def post_detail(request, year, month, day, post):
