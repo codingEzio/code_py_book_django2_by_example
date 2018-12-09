@@ -2,6 +2,7 @@
 # My own 
 .idea
 ._*
+Chapter_01/sensitive.py
 
 # env folder
 env
