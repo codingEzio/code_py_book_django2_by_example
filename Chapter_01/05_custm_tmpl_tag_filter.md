@@ -59,3 +59,12 @@
         ```@register.filter(name='markdown')```
         ```def markdown_format(...): ...```
     - ***DO see the code for more details***! 
+- Ok, now let's modify the **templates**. 
+    - ```detail.html```
+        1. load by ```{% load blog_tags %}```
+        2. replace: ```{{ post.body | markdown }}```
+            - ```{{ post.body | linebreaks }}```
+    - ```list.html```
+        1. load by ```{% load blog_tags %}```
+        2. replace: ```{{ post.body | markdown | truncatewords_html:30 }}```
+            - old: ```{{ post.body | truncatewords:30 | linebreaks }}```
