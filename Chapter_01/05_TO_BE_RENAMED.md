@@ -29,3 +29,9 @@
 - And the related two templates 
     - One for our purpose ```base.html``` (that make it displayed on the homepage)
     - And the func which is tightly connected with: **templates/blog/post/** ```latest_posts.html```
+
+# And of course, ***most commended posts*** 🙂
+- Still editing the blog/**templatetags**/```blog_tags.py```
+    - A new function ```get_most_commented_posts()``` which is *decorated* by ```@register.simple_tag```
+- And go on editing the ```base.html```
+    - It's simply using the vals of variables that comes from the function we've written before :P
