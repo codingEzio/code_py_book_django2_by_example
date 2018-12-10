@@ -65,7 +65,11 @@ def markdown_format(text):
             for tag,    {% my_post_count %}
             for filter, {{ post.body | truncatewords:30 }}
         
-        
+        Why using `mark_safe`?
+            go see the book & related docs for more details :P
+            
+        Also, about the 'markdown',
+            I simply typed these (& not digging more ...), =_=!
     """
     
     return mark_safe(markdown.markdown(text))
