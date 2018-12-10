@@ -14,4 +14,17 @@
 - cuz there’s a new app, 
     - so you need migrate! 
         - ya need to do it every time you add a new app
-    - 
+    - since it’s built-in, not our model
+        - so it’s just one cmd: ```./manage.py migrate```
+        
+### And the file
+- **app-blog/**```sitemaps.py``` 
+    - Well, we’re simply does these 
+        - inherit the ```django.contrib.sitemaps.Sitemap```
+        - and override some attrs, e.g. 
+            - ```changefreq = 'weekly'```
+            - ```def lastmod(self, obj): ...```
+- **proj/**```urls.py``` (details are inside the code!)
+
+### Now you can test it! 
+- Go ```http://127.0.0.1:8000/sitemap.xml``` (simple af, right?)
