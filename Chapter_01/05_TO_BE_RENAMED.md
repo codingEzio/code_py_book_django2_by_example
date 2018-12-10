@@ -35,3 +35,27 @@
     - A new function ```get_most_commented_posts()``` which is *decorated* by ```@register.simple_tag```
 - And go on editing the ```base.html```
     - It's simply using the vals of variables that comes from the function we've written before :P
+
+-----------
+
+### Okay, new stuff is coming! 
+- We'll **customize** our own **template filters** :P 
+- What is it? Here's an example 
+    > ```{{ post.body | truncatewords:30 | linebreaks }}```
+
+### More examples 
+- ```{{ variable | my_filter``` ```:"foo"```
+- ```{{ variable | my_filter | another_filter ```
+ 
+### Setup
+- Add **markdown** support by 
+    1. install by ```pip3 install Markdown==2.6.11```
+    2. export dep by ```pip freeze > requirements.txt```
+- And let's (continue) editing the ```blog_tags.py``` 
+    - import 
+        1. ```from django.utils.safestring import mark_safe```
+        2. ```import markdown```
+    - use it 
+        ```@register.filter(name='markdown')```
+        ```def markdown_format(...): ...```
+    - ***DO see the code for more details***! 
