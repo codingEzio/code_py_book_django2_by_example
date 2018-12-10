@@ -23,3 +23,21 @@ def total_posts():
     """
     
     return Post.published.count()
+
+
+@register.inclusion_tag('blog/post/latest_posts.html')
+def show_latest_posts(count=5):
+    """
+        As its name suggests,
+            it was used to "display some content by rendering another template".
+            
+        A simple comparison,
+            complete    <html> ... h p div ... </html>
+            partial     e.g. <li> ... </li> (without the whole DOM)
+            
+        About the code
+            the param `count` simply allow you to name 'how many posts were shown'.
+    """
+    
+    latest_posts = Post.published.order_by('-publish')[:count]
+    return { 'latest_posts': latest_posts }

@@ -22,3 +22,10 @@
 - Okay, let's edit the ```base.html``` (dead simple), 
     1. "import" by ```{% load blog_tags %}``` (put this before ```<!DOCTYPE html>```)
     2. use it by ```I've written {% my_post_count %} posts for now 😌.```
+    
+### Alright, let's add another feature: ***displaying latest posts in the sidebar*** 
+- Still editing the blog/**templatetags**/```blog_tags.py```
+    - A new function ```show_latest_posts()``` which is *decorated* by ```@register.inclusion_tag(...)```
+- And the related two templates 
+    - One for our purpose ```base.html``` (that make it displayed on the homepage)
+    - And the func which is tightly connected with: **templates/blog/post/** ```latest_posts.html```
