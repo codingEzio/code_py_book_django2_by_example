@@ -1,5 +1,9 @@
 
-### A new feature: ***full-text search***. 
+### TOC of adding new feature (***full-text search***)  
+- setup of PostgreSQL
+- 
+
+---------- 
 
 ### Setup of **PostgreSQL**
 - For **macOS** 
@@ -30,3 +34,24 @@
 3. well, now we got a clean DB 
     - yet with no data 
     - just go ```http://127.0.0.1:8000/admin/``` to **gen some content**! (six posts is enough :P)
+    
+---------- 
+
+### Base  
+- ```settings.py```
+    - ```INSTALLED_APPS```
+        - ```django.contrib.postgres``` 
+
+- related files (all under the ```PROJECT/app-blog```)
+    - ```forms.py```
+    - ```views.py```
+    - ```urls.py```
+
+- what does the three files do?
+    1. a basic text field 
+    2. logic & rendering  (also have ```PostgreSQL``` as backend)
+    3. a decent url for access 
+
+### So, now we got a (working?) simple ‘full-text search’ features!
+- Go to [http://127.0.0.1:8000/blog/search/](http://127.0.0.1:8000/blog/search/)
+- Not takin’ too much notes for now ( ***might added later?*** )
