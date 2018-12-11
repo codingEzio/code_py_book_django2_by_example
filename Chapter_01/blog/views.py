@@ -248,11 +248,13 @@ def post_search(request):
             
         Two old changes
             
-            0)  search_vector = SearchVector('title', 'body')
-                SearchVector('title', weight='A') + SearchVector('body', weight='B')
+            0)  search_vector
+                    SearchVector('title', 'body')
+                    SearchVector('title', weight='A') + SearchVector('body', weight='B')
             
-            1)  filter(search=search_query).order_by('-rank')
-                filter(rank__gte=0.3).order_by('-rank')
+            1)  results
+                    filter(search=search_query).order_by('-rank')
+                    filter(rank__gte=0.3).order_by('-rank')
     """
     
     form = SearchForm()
@@ -271,9 +273,8 @@ def post_search(request):
             search_query = SearchQuery(query)
             
             results = Post.objects.annotate(
-                search=search_vector,
-                rank=SearchRank(search_vector, search_query)
-            ).filter(rank__gte=0.3).order_by('-rank')
+                similarity=TrigramSimilarity('title', query),
+            ).filter(similarity__gt=0.3).order_by('-similarity')
     
     return render(request,
                   'blog/post/search.html', { 'form'   : form,
