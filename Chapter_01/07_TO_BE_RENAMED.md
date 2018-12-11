@@ -55,3 +55,9 @@
 ### So, now we got a (working?) simple ‘full-text search’ features!
 - Go to [http://127.0.0.1:8000/blog/search/](http://127.0.0.1:8000/blog/search/)
 - Not takin’ too much notes for now ( ***might added later?*** )
+
+-------- 
+
+### Ranking & weighting  
+- only the ```views.py``` was changed 
+    - go see the code! (not much notes for now)
