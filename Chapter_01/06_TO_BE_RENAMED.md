@@ -35,4 +35,19 @@
         - change to your own name (for me, it's ```localhost:8000```)
 - then it'll generate the correct URLs (*sitemap.xml*)
 
-### Nope, it's not finished (there's a blackout... shit...)
+----------
+
+### Now let's create *feeds* for our blog posts 
+- One word is enough: ***RSS***.
+
+### Setup 
+- app-blog/```feeds.py```
+    1. get data, or get parts of data
+    2. assign to specific vals, 
+        - e.g. the ```item_title``` was for the titles in RSS
+- app-blog/```urls.py```
+    1. point to that url 
+    2. provide a name for templates uses 
+- templates/```base.html```
+    - add ```<p><a href="{% url "blog:post_feed" %}">Subscribe by RSS</a></p>```
+    
