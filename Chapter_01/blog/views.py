@@ -2,9 +2,10 @@ from django.core.mail import send_mail
 from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
+from django.contrib.postgres.search import SearchVector
 
 from .models import Post, Comment
-from .forms import EmailPostForm, CommentForm
+from .forms import EmailPostForm, CommentForm, SearchForm
 
 from taggit.models import Tag
 
@@ -205,23 +206,23 @@ def post_share(request, post_id):
             post_url = request.build_absolute_uri(post.get_absolute_url())
             
             subject = '{} ({}) recommends you reading "{}"'.format(
-                    input_email_data['name'],
-                    input_email_data['email'],
-                    post.title
+                input_email_data['name'],
+                input_email_data['email'],
+                post.title
             )
             
             message = 'Read "{}" at {}\n\n{}\'s comments: {}'.format(
-                    post.title,
-                    post_url,
-                    input_email_data['name'],
-                    input_email_data['comments']
+                post.title,
+                post_url,
+                input_email_data['name'],
+                input_email_data['comments']
             )
             
             send_mail(
-                    subject,
-                    message,
-                    sensitive.EMAIL_HOST_USER,  # from
-                    [input_email_data['to']]    # to
+                subject,
+                message,
+                sensitive.EMAIL_HOST_USER,  # from
+                [input_email_data['to']]  # to
             )
             sent = True
     
@@ -232,3 +233,28 @@ def post_share(request, post_id):
                   'blog/post/share.html', { 'post': post,
                                             'form': form,
                                             'sent': sent })
+
+
+def post_search(request):
+    """
+    
+    """
+    
+    form = SearchForm()
+    query = None
+    results = []
+    
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            
+            results = Post.objects.annotate(
+                search=SearchVector('title', 'body'),
+            ).filter(search=query)
+            
+    return render(request,
+                  'blog/post/search.html', {'form': form,
+                                            'query': query,
+                                            'results': results})
