@@ -17,8 +17,8 @@ class EmailPostForm(forms.Form):
     to = forms.EmailField()
     comments = forms.CharField(required=False,
                                widget=forms.Textarea)
-    
-    
+
+
 class CommentForm(forms.ModelForm):
     """
         A little diff from before,
@@ -35,3 +35,7 @@ class CommentForm(forms.ModelForm):
         
         model = Comment
         fields = ('name', 'email', 'body')
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField()
