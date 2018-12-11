@@ -1,6 +1,7 @@
 
 ### Foreword 
 - We'll add **sitemap** for our site :P 
+- and 
 
 ----- 
 
@@ -28,3 +29,10 @@
 
 ### Now you can test it! 
 - Go ```http://127.0.0.1:8000/sitemap.xml``` (simple af, right?)
+- Oh! Be sure to change the **domain name**! 
+    - which the default is ```example.com```
+        - go ```http://localhost:8000/admin/sites/site/```
+        - change to your own name (for me, it's ```localhost:8000```)
+- then it'll generate the correct URLs (*sitemap.xml*)
+
+### Nope, it's not finished (there's a blackout... shit...)
