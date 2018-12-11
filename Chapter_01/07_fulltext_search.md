@@ -58,6 +58,18 @@
 
 -------- 
 
-### Ranking & weighting  
+### more precise::FirstMethod > Ranking-and-weighting  
 - only the ```views.py``` was changed 
     - go see the code! (not much notes for now)
+    
+### more precise::SecondMethod > Trigram-Similarity
+- Check these two resources 
+    - [postgresql-trigrams-and-similarity](https://stackoverflow.com/questions/43156987/postgresql-trigrams-and-similarity)
+    - [docs/9.1/pgtrgm](https://www.postgresql.org/docs/9.1/pgtrgm.html)   
+- Setup in pgSQL side 
+    1. ```pgsql blog``` (the 'blog' is the name of DB)
+    2. ```CREATE EXTENSION pg_trgm``` (the thing we'll use)
+- Setup in project side 
+    - ```blog-app/views.py```
+        1. 
+                                                                                                                                          
