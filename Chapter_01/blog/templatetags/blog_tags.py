@@ -66,7 +66,8 @@ def markdown_format(text):
             for filter, {{ post.body | truncatewords:30 }}
         
         Why using `mark_safe`?
-            go see the book & related docs for more details :P
+            It simply marks the string as 'safe' for HTML output.
+            It was used pretty ?everywhere (in short: ready-for-rendering).
             
         Also, about the 'markdown',
             I simply typed these (& not digging more ...), =_=!
