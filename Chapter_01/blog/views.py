@@ -3,7 +3,10 @@ from django.views.generic import ListView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, get_object_or_404
 
-from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank
+from django.contrib.postgres.search import (
+    SearchVector, SearchQuery, SearchRank,
+    TrigramSimilarity,
+)
 
 from .models import Post, Comment
 from .forms import EmailPostForm, CommentForm, SearchForm
@@ -242,6 +245,14 @@ def post_search(request):
         
         The new (check it by `git log`) one
             is for 'put the more-relevant posts at first' (for search-result)
+            
+        Two old changes
+            
+            0)  search_vector = SearchVector('title', 'body')
+                SearchVector('title', weight='A') + SearchVector('body', weight='B')
+            
+            1)  filter(search=search_query).order_by('-rank')
+                filter(rank__gte=0.3).order_by('-rank')
     """
     
     form = SearchForm()
@@ -254,7 +265,6 @@ def post_search(request):
         if form.is_valid():
             query = form.cleaned_data['query']
             
-            # search_vector = SearchVector('title', 'body')
             search_vector = SearchVector('title', weight='A') \
                             + SearchVector('body', weight='B')
             
@@ -263,7 +273,6 @@ def post_search(request):
             results = Post.objects.annotate(
                 search=search_vector,
                 rank=SearchRank(search_vector, search_query)
-            # ).filter(search=search_query).order_by('-rank')
             ).filter(rank__gte=0.3).order_by('-rank')
     
     return render(request,
