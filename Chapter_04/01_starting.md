@@ -6,9 +6,10 @@
 
 ### In **this** (i.e. 4th) chapter, 
 - We'll build the **auth** parts (i.e. *register* & else).
-- Here we go! 
+- Just to be clear, 
+    - You **could** (& maybe you **should**)<br>the default Django's *authentication views* (in most cases) :P
 
-------- 
+--------
 
 ### Getting started 
 1. ```pip3 install Django==2.0.5```
