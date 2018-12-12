@@ -6,6 +6,7 @@ Chapter_01/sensitive.py
 
 # env folder
 env
+env_*
 Part*/env
 Project*/env
 Chapter*/env
