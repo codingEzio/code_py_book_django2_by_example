@@ -70,6 +70,5 @@
     1. ```pgsql blog``` (the 'blog' is the name of DB)
     2. ```CREATE EXTENSION pg_trgm``` (the thing we'll use)
 - Setup in project side 
-    - ```blog-app/views.py```
-        1. 
+    - ```blog-app/views.py```, details are inside the code :P 
                                                                                                                                           
