@@ -18,4 +18,29 @@
         - also, it IS functional right now :P
     
 ### Password reset 
-- 
+- There’re *five* templates (you can also call it ***scenarios*** 🤣)
+    - first, you wanna reset ur pwd
+        - link: account/password_reset/
+        - name: ```password_reset_form.html```
+    - second, the (reset) mail was send
+        - link: account/password_reset/done/
+        - name: ```password_reset_done.html```
+    - and, you got the link from the terminal 
+        - link: account/reset/MQ/523-dc0fff93ba5d6cf414da/
+        - name: ```password_reset_email.html```
+    - u clicked it and being brought to the reset page 
+        - link: account/reset/MQ/set-password/
+        - name: ```password_reset_confirm.html```
+    - you’ve reset the pwd (successfully)
+        - link: account/reset/done/
+        - name: ```password_reset_complete.html```
+- And the **email** (y’all need a reset email, right?)
+    - ```EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'```
+- Lastly, the ```urls.py``` (just glimpse)
+    - ```password_reset/```
+    - ```password_reset/done/```
+    - ```reset/<uidb64>/<token>/```
+    - ```reset/done/```
+- One more, let’s add a link to the ```login.html``` 
+    - it’s under the ```templates/registration/``` folder 
+    - ``` ... href="{% url "password_reset" %}">Forgotten ur passwd? ... ```
