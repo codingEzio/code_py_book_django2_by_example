@@ -17,4 +17,9 @@ urlpatterns = [
          dj_auth_views.PasswordChangeView.as_view(), name='password_change'),
     path('password_change/done/',
          dj_auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+    
+    path('password_reset/',
+         dj_auth_views.PasswordResetView.as_view(), name='password_reset'),
+    path('password_reset/done/',
+         dj_auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
 ]
