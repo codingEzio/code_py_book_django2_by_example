@@ -70,7 +70,3 @@
             - add ```path('login/', views.user_login, name='login'),```
 - Okay! Now you can test it 
     - go directly to [http://127.0.0.1:8000/account/login/](http://127.0.0.1:8000/account/login/)
-
--------- 
-
-### 
