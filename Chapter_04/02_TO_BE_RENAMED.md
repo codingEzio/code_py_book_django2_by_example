@@ -50,3 +50,15 @@
         - ```LOGIN_URL = 'login'```
         - ```LOGOUT_URL = 'logout'```
     - aha, these are actually all *tightly connected* with the auth views (of Django)
+    
+### now let's add these urls to the ```base.html```
+- Of course, there also should have some logic :P
+- Two parts were added to it (specifically ```<div class='header'> ...```)
+    1. the **apps** (i.e. *dashboard*, *images*, *people*)
+        - we'll finish it after a while :P 
+        - & with *is-this-authed-or-not* (not logged in? => not displaying it)
+    2. the **login** & **logout** 
+        - if auth_ed 
+            - display *username* & *logout*
+        - if not auth_ed 
+            - display *login* only 
