@@ -10,4 +10,6 @@ urlpatterns = [
     
     path('login/', dj_auth_views.LoginView.as_view(), name='login'),
     path('logout/', dj_auth_views.LogoutView.as_view(), name='logout'),
+    
+    path('', views.dashboard, name='dashboard'),
 ]

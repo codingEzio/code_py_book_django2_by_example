@@ -35,3 +35,18 @@
             - the actually logic is already done by Django 
                 - which the packages we imported in the ```urls.py```
                 - we're simply *rewrite* the templates :P 
+
+### and **the page** after user *logged in* 
+- ```urls.py``` (app-level)
+    - Add ```path('', views.dashboard, name='dashboard'),``` 
+- ```templates/account/dashboard.html```
+    - Just a header & a greeting paragraph.
+- ```views.py``` (app-level)
+    - ```@login_required``` => ```dashboard()``` (decorated
+    - other stuff is (almost) the same (there's a variable called *section*)
+- okay, now let's edit the ```settings.py```
+    - add these lines 
+        - ```LOGIN_REDIRECT_URL = 'dashboard'```
+        - ```LOGIN_URL = 'login'```
+        - ```LOGOUT_URL = 'logout'```
+    - aha, these are actually all *tightly connected* with the auth views (of Django)
