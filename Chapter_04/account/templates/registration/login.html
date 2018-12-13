@@ -18,10 +18,11 @@
 		<form action="{% url 'login' %}" method="post">
 			{{ form.as_p }} {% csrf_token %}
 
-			<input type="hidden" name="next" value="{{ next }}">
-
+			<input type="hidden" name="next" value="{{ next }}" />
 			<p><input type="submit" value="Log-in"></p>
 		</form>
+
+		<p><a href="{% url "password_reset" %}">Forgotten ur passwd?</a></p>
 	</div>
 
 {% endblock %}
