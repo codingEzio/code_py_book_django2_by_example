@@ -21,6 +21,7 @@
             1. add ```127.0.0.1 mysite.com``` to your ```/etc/hosts``` file 
             2. edit like ```ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']``` (the ```settings.py```)
     5. now you could access it  by ```http://mysite.com:8000/account/login/```
-        - we don't actually finished anything, yet :P
-- Coding 
-    - 
+- Implementation 
+    - Facebook part (p254 ~ 261): not doing it cuz I don't have one 
+    - Twitter part (p262 ~ 265): I haven't receive the email (dev-api)
+    - Google part (p266 ~ 271): just skipped for now :)
