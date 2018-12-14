@@ -4,6 +4,9 @@
 ._*
 Chapter_01/sensitive.py
 
+# irrelevant files 
+Chapter_04/media
+
 # env folder
 env
 env_*
