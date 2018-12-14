@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 
+from .models import Profile
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
@@ -19,12 +21,12 @@ class UserRegistrationForm(forms.ModelForm):
     password = forms.CharField(label='Password',
                                widget=forms.PasswordInput)
     password_2nd = forms.CharField(label='Type it again',
-                                     widget=forms.PasswordInput)
+                                   widget=forms.PasswordInput)
     
     class Meta:
         model = User
         fields = ('username', 'first_name', 'email')
-        
+    
     def clean_password_2nd(self):
         """
             The name (i.e. clean_FIELDS) might be a convention,
@@ -37,3 +39,24 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Password does NOT match!')
         
         return cleaned['password_2nd']
+
+
+class UserEditForm(forms.ModelForm):
+    """
+        This one is for users to edit their info (of the built-in Django model)
+    """
+    
+    class Meta:
+        model = User
+        fields = ('first_name', 'last_name', 'email')
+
+
+class ProfileEditForm(forms.ModelForm):
+    """
+        This one is quite different,
+            we allow users to edit the profile data which is created by us :P
+    """
+    
+    class Meta:
+        model = Profile
+        fields = ('date_of_birth', 'photo')
