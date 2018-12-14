@@ -5,6 +5,6 @@
 {% block content %}
 
 	<h1>Welcome {{ new_user.first_name }}</h1>
-	<p> You are ready to go 👋 </p>
+	<p> You are ready to go 👋 , click <a href="{% url "login" %}">here</a> to log in!</p>
 
 {% endblock %}

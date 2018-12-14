@@ -11,7 +11,12 @@
 			Please try again !
 		</p>
 	{% else %}
-		<p>Use the following form to log in 😌</p>
+		<p>
+			Use the following form to log in 😌<br>
+			<small>
+				( If you don't have one, you could <a href="{% url "register" %}">register here</a> )
+			</small>
+		</p>
 	{% endif %}
 
 	<div class="login-form">
