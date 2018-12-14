@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 
-from .forms import LoginForm
+from .forms import LoginForm, UserRegistrationForm
 
 
 def user_login(request):
@@ -35,7 +35,14 @@ def user_login(request):
                   'account/login.html', { 'form': form })
 
 
+def register(request):
+    user_form = UserRegistrationForm()
+    
+    return render(request,
+                  'account/register.html', { 'user_form': user_form })
+
+
 @login_required
 def dashboard(request):
     return render(request,
-                  'account/dashboard.html', {'section': 'dashboard'})
+                  'account/dashboard.html', { 'section': 'dashboard' })

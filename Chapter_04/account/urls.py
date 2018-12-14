@@ -33,6 +33,8 @@ urlpatterns = [
     #   all the jobs we've done in the ↑ six lines above :P
     path('', include('django.contrib.auth.urls')),
     
+    path('register/', views.register, name='register'),
+    
     # we actually only need these two lines
     #   1. auth part (done by Django, of course we can customize it)
     #   2. our part  (that's up to you, right? XD)
