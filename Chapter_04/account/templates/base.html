@@ -5,28 +5,28 @@
 	<link rel="stylesheet" href="{% static "css/base.css" %}">
 </head>
 <body>
-	<div id="header">
-		<span class="logo">Bookmarks</span>
+<div id="header">
+	<span class="logo">Bookmarks</span>
 
-		{% if request.user.is_authenticated %}
-			<ul class="menu">
+	{% if request.user.is_authenticated %}
+		<ul class="menu">
 
-				<li {% if selection == "dashboard" %} class="selected" {% endif %}>
-					<a href="{% url "dashboard" %}">My dashboard</a>
-				</li>
+			<li {% if selection == "dashboard" %} class="selected" {% endif %}>
+				<a href="{% url "dashboard" %}">My dashboard</a>
+			</li>
 
-				<li {% if selection == "images" %} class="selected" {% endif %}>
-					<a href="#">Images</a>
-				</li>
+			<li {% if selection == "images" %} class="selected" {% endif %}>
+				<a href="#">Images</a>
+			</li>
 
-				<li {% if selection == "people" %} class="selected" {% endif %}>
-					<a href="#">People</a>
-				</li>
+			<li {% if selection == "people" %} class="selected" {% endif %}>
+				<a href="#">People</a>
+			</li>
 
-			</ul>
-		{% endif %}
+		</ul>
+	{% endif %}
 
-		<span class="user">
+	<span class="user">
 			{% if request.user.is_authenticated %}
 				Hello {{ request.user.first_name }},
 				<a href="{% url "logout" %}">Logout</a>
@@ -36,11 +36,21 @@
 			{% endif %}
 		</span>
 
-	</div>
+</div>
 
-	<div id="content">
-		{% block content %}
-		{% endblock %}
-	</div>
+{% if messages %}
+	<ul class="messages">
+		{% for message in messages %}
+			<li class="{{ message.tags }}">
+				{{ message | safe }} <a href="#" class="close">x</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+<div id="content">
+	{% block content %}
+	{% endblock %}
+</div>
 </body>
 </html>
