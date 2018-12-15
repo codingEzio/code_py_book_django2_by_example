@@ -45,3 +45,14 @@ class Image(models.Model):
     
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        """
+            Now we're overriding the `save()` method
+                in order to "automatically gen the 'slug' field" (based on 'title')
+        """
+        
+        if not self.slug:
+            self.slug = slugify(self.title)
+        
+        super(Image, self).save(*args, **kwargs)
