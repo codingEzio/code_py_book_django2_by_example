@@ -13,6 +13,13 @@ class Image(models.Model):
             created
                 auto_now_add    the time it was created
                 
+            ManyToManyField
+                For sth like '[users_like_for_img]  <->  [Image] & [User]'
+                
+                you could retrieve the data like this
+                    =>  Image.user_likes.all()  --  how many likes for the img
+                    =>  User.image_likes.all()  --  what imgs does the user liked
+                
         About the 'index'
             1. it could boost query performance
             2. there's some cases the index would be created automatically
@@ -31,6 +38,10 @@ class Image(models.Model):
     description = models.TextField(blank=True)
     
     created = models.DateField(auto_now_add=True, db_index=True)
+    
+    users_like_for_img = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                                related_name='images_liked',
+                                                blank=True)
     
     def __str__(self):
         return self.title
