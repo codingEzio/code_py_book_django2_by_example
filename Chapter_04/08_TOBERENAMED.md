@@ -8,13 +8,12 @@
 
 ### Basic setup 
 - Foreword 
-    1. Most of this part (for now) is doing *js stuff* :D
+    - Most of this part (for now) is doing *js stuff* :D
 - Here's what we're gonna do 
     - [x] add an entry (store the link) to the homepage 
         - Here ```app-account/templates/account/```**```dashboard.html```**
     - [x] a launcher of the core js 
         - it was stored at ```app-images/templates/```**```bookmarklet_launcher.js```**
-        - go check the code to see more details 
     - [x] the core js file 
         - [x] the css along with it (how it was displayed (keyword:```jQuery``` ))
         - they were stored at here (under ```app-images/```**```static```**)
@@ -41,3 +40,15 @@
     1. first save it as a bookmark (copy the js code as the url of the bookmark)
     2. go to a random site *then* click the bookmark (js code)
     3. it should be a simple UI for the images for the current page (not fully impl yet)
+    
+### We let js do some of the stuff for us 
+- ```javascript
+    jQuery('#bookmarklet').hide();
+
+    window.open(site_url + 'images/create/?url='
+        + encodeURIComponent(selected_image)
+        + '&title='
+        + encodeURIComponent(jQuery('title').text()),
+        + '_blank'
+    );
+```
