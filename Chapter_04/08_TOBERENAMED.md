@@ -71,3 +71,24 @@
         - override ```get_absolute_url``` by ```reverse('images:detail', args=[self.id, self.slug])```
     3. use *views.py* to get the object & rendering 
     4. & and the templates 
+    
+    
+----------
+
+
+### Generating thumbnails 
+- basic setup
+    1. ```pip3 install sorl-thumbnail==12.4.1```
+    2. add ```'sorl.thumbnail',``` to ```INSTALLED_APPS``` 
+    3. migrate ```./manage.py migrate```
+- make changes to ```templates/images/image/detail.html```
+    - First, you got two ways to use it: ```{% thumbnail %}``` tag, or using a *custom* *```ImageField```*
+        - We'll use the *tag* ways :D
+    - okay, let's start 
+        1. load it by ```load thumbnail```
+        2. replace stuff
+            - OLD: ```... {{ image.image.url }} ...```
+            - NEW: ```{% thumbnail image.image "300" as img %}``` ... ```{% endthumbnail %}```
+- note:
+    - this one is completely optional :)
+    
