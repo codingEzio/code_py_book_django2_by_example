@@ -91,4 +91,5 @@
             - NEW: ```{% thumbnail image.image "300" as img %}``` ... ```{% endthumbnail %}```
 - note:
     - this one is completely optional :)
+    - here's some [examples](https://sorl-thumbnail.readthedocs.io/en/latest/examples.html?highlight=imagefield) (from ```sorl-thumbnail```'s official tutorial)
     
