@@ -34,6 +34,8 @@
     - Modify ```bookmarklet_launcher.js``` & ```bookmarklet.js```
         - OLD: ```http://127.0.0.1:8000/```
         - NEW: ```https://THIS_ONE_VARIES.ngrok.io/```
+    - Also, do make sure to change the url of the bookmark!!!
+        - Still replacing the ```This_one_varis``` (every time u run the ```ngrok http 8000```)
 - Note
     - For now, you could replace all the urls with the new url (while testing)
 - Okay, you could test it now
@@ -51,4 +53,21 @@
         + encodeURIComponent(jQuery('title').text()),
         + '_blank'
     );
-```
+    ```
+
+### The page that users'll be redirected 
+- We still would encouter the ```AttributeError```, but ***that's OK***!
+- Now let's impl the page (& logic) after users clicked the ```bookmark it```
+- files-gonna-be-changed
+    1. ```get_absolute_url``` in **models.py**
+    2. the page that user'll be redirected to: ```templates/images/image/detail.html```
+    3. get the pic 
+        - route: ```images/urls.py```
+        - render: ```images/views.py``` 
+- actual-procedures
+    1. add route (**urls.py**)
+        - ```path('detail/<int:id>/<slug:slug>/',views.image_detail, name='detail'),```
+    2. complete *models.py*
+        - override ```get_absolute_url``` by ```reverse('images:detail', args=[self.id, self.slug])```
+    3. use *views.py* to get the object & rendering 
+    4. & and the templates 
