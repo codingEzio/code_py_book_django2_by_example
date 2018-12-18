@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 
+from common.decorators import ajax_required
 from .forms import ImageCreateForm
 from .models import Image
 
@@ -41,6 +42,7 @@ def image_detail(request, id, slug):
                                                 'image'  : image })
 
 
+@ajax_required
 @login_required
 @require_POST
 def image_like(request):
@@ -60,7 +62,18 @@ def image_like(request):
             
             variables
                 image_id    id      pk 'id' auto gen_ed by Django (DB-Side)
-                action
+                action              add who-likes-the-image
+                
+            JsonResponse
+                nothing special, just another if-case
+                
+        ----- ----- ----- -----
+        
+        The newly added `@ajax_required`
+            is mainly for "users cannot access specific url directly"
+            
+        Test it by 'YOUR_FULL_URL/images/like/'
+            it should be a '400 (Bad request)' (it's inside the devtools)
     """
     
     image_id = request.POST.get('id')
