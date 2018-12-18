@@ -16,7 +16,7 @@
 			</li>
 
 			<li {% if selection == "images" %} class="selected" {% endif %}>
-				<a href="#">Images</a>
+				<a href="{% url "images:list" %}">Images</a>
 			</li>
 
 			<li {% if selection == "people" %} class="selected" {% endif %}>
