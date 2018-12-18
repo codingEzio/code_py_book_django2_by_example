@@ -19,12 +19,13 @@
 		<div class="image-info">
 			<div>
 				<span class="count">
-					{{ total_likes }} like{{ total_likes|pluralize }}
+					<span class="total">{{ total_likes }} </span>
+					like{{ total_likes|pluralize }}
 				</span>
 			</div>
 			{{ image.description|linebreaks }}
 		</div>
-		
+
 		<div class="image-likes">
 			{% for user in image.users_like_for_img.all %}
 				<div>
