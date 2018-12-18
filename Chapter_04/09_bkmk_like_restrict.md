@@ -2,7 +2,7 @@
 ### Here's what we're gonna do
 - [x] add ```csrf_token``` for every templates we've created (keyword: ```auto```, ```AJAX```)
 - [x] new feature: ```like``` for users to "like an image"
-- [ ] custom decorate (for views, powered by **AJAX**)
+- [x] custom decorate (for views, powered by **AJAX**)
 - [ ] pagination (also powered by **AJAX**)
 
 ------- 
