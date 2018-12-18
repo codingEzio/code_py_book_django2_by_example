@@ -1,7 +1,7 @@
 
 ### Here's what we're gonna do
 - [x] add ```csrf_token``` for every templates we've created (keyword: ```auto```, ```AJAX```)
-- [ ] new feature: ```like``` for users to "like an image"
+- [x] new feature: ```like``` for users to "like an image"
 - [ ] custom decorate (for views, powered by **AJAX**)
 - [ ] pagination (also powered by **AJAX**)
 
@@ -63,3 +63,14 @@
 - ***views.py***
     - ```ajax``` send the opt 
     - ```views``` receive it & process
+    
+----------
+
+### Restrict views (via ***AJAX*** only) 
+- create a package under **PROJECT-ROOT-FOLDER** (where ```manage.py``` lives)
+    - **common**/**```__init__.py```**
+    - **common**/**```decorators.py```**
+- call tree
+    - ```is_ajax``` -> the deco we've written -> deco the func we want it be restricted
+- note
+    - more notes are inside the code (those two files)!!!
