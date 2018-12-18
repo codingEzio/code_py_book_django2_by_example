@@ -1,7 +1,7 @@
 (function () {
     var jquery_version = '3.3.1';
 
-    var site_url = 'https://5db703a6.ngrok.io/';
+    var site_url = 'https://a470c3a0.ngrok.io/';
     var static_url = site_url + 'static/';
 
     var min_width = 100;
@@ -51,7 +51,7 @@
                 + encodeURIComponent(selected_image)
                 + '&title='
                 + encodeURIComponent(jQuery('title').text()),
-                + '_blank'
+                +'_blank'
             );
         });
 
