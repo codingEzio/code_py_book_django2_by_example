@@ -15,5 +15,7 @@ urlpatterns = [
     path('like/',
          views.image_like, name='like'),
     
+    path('',
+         views.image_list, name='list'),
     
 ]
