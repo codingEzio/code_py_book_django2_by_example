@@ -21,7 +21,7 @@ class Profile(models.Model):
 class Contact(models.Model):
     """
         This model is for the feature 'follower system' :D
-            and it's kinda in the middle-ground (attr, not item)
+            and it won't be displayed at the very frontend (it'll, but deeper)
             
         The base model is still 'User' (provided by Django)
             we're just creating other stuff attaching to it :D
