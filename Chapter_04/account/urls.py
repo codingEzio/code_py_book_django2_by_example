@@ -40,4 +40,10 @@ urlpatterns = [
     #   1. auth part (done by Django, of course we can customize it)
     #   2. our part  (that's up to you, right? XD)
     path('', views.dashboard, name='dashboard'),
+    
+    # routes for 'follower system'
+    path('users/', views.user_list, name='user_list'),
+    path('user/<username>/', views.user_detail, name='user_detail'),
+    
+    
 ]
