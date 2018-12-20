@@ -4,7 +4,7 @@
     } else {
         document.body.appendChild(
             document.createElement('script')).src =
-            'https://a470c3a0.ngrok.io/static/js/bookmarklet.js?r=' +
+            'https://42d33127.ngrok.io/static/js/bookmarklet.js?r=' +
             Math.floor(Math.random() * 99999999999999999999999);
     }
 })();
