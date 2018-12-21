@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login
@@ -111,5 +113,5 @@ def user_detail(request, username):
                              username=username, is_active=True)
     
     return render(request,
-                  'account/user/detail.html', {'section': 'people',
-                                               'user': user})
+                  'account/user/detail.html', { 'section': 'people',
+                                                'user'   : user })

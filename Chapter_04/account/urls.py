@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from django.urls import path, include
 from django.contrib.auth import views as dj_auth_views
 
@@ -44,6 +46,5 @@ urlpatterns = [
     # routes for 'follower system'
     path('users/', views.user_list, name='user_list'),
     path('user/<username>/', views.user_detail, name='user_detail'),
-    
     
 ]
