@@ -37,3 +37,43 @@
 	{% endwith %}
 
 {% endblock %}
+
+
+{% block domready %}
+
+	$('a.follow').click(function (e) {
+		e.preventDefault();
+
+		$.post('{% url "user_follow" %}', {
+			id: $(this).data('id'),
+			action: $(this).data('action')
+		},
+
+		function (data) {
+			if (data['status'] == 'ok') {
+				var prev_action = $('a.follow').data('action');
+
+				// toggle data-action
+				$('a.follow').data(
+					'action', prev_action == 'follow' ? 'unfollow' : 'follow'
+				);
+
+				// toggle link text
+				$('a.follow').text(
+					prev_action == 'follow' ? 'Unfollow' : 'Follow'
+				);
+
+				// update total followers
+				var prev_followers = parseInt(
+					$('span.count .total').text()
+				);
+
+				$('span.count .total').text(
+					prev_action == 'follow' ? prev_followers + 1 : prev_followers - 1
+				);
+			}
+		}
+	);
+});
+
+{% endblock %}
