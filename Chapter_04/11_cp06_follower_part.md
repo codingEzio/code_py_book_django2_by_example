@@ -1,9 +1,9 @@
 ### This is Chapter 06, we'll cover these 
 - [x] Create many-to-many relationships with an **intermediary model**
 - [x] Build a **follower** system 
-- [ ] Create an **activity stream** application 
-- [ ] Add **generic relations** to models 
-- [ ] Optimize ```QuerySets``` for related objects 
+- [x] Create an **activity stream** application 
+- [x] Add **generic relations** to models 
+- [x] Optimize ```QuerySets``` for related objects 
 - [ ] Using ```signals``` for ?denormalizing counts 
 - [ ] Store items in ***Redis***
 
