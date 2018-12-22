@@ -24,4 +24,11 @@
 		You can also <a href="{% url "edit" %}">edit ur profile</a>
 		or <a href="{% url "password_change" %}">modify ur password :D</a>
 	</p>
+
+	<h2>What's happening</h2>
+	<div id="action-list">
+		{% for action in actions %}
+			{% include "action/detail.html" %}
+		{% endfor %}
+	</div>
 {% endblock %}
