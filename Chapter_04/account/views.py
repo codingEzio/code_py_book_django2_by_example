@@ -73,7 +73,6 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    
     # not including the actions done by the current user
     actions = Action.objects.exclude(user=request.user)
     
@@ -93,7 +92,11 @@ def dashboard(request):
         pass
     
     # ten is enough, lol
-    actions = actions[:10]
+    #   old code (slower)
+    #   >> actions = actions[:10]
+    actions = actions \
+                  .select_related('user', 'user__profile') \
+                  .prefetch_related('target')[:10]
     
     return render(request,
                   'account/dashboard.html', { 'section': 'dashboard',
