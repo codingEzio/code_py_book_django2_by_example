@@ -14,6 +14,8 @@ from .forms import (
 )
 
 from actions.utils import create_action
+
+from actions.models import Action
 from .models import Profile, User, Contact
 
 
@@ -71,8 +73,31 @@ def register(request):
 
 @login_required
 def dashboard(request):
+    
+    # not including the actions done by the current user
+    actions = Action.objects.exclude(user=request.user)
+    
+    # the users' id that the current user is following with
+    following_ids = request.user.following.values_list('id',
+                                                       flat=True)
+    
+    if following_ids:
+        
+        # not none (following >=1 user)
+        #   get those actions (id <-> action)
+        actions = actions.filter(user_id__in=following_ids)
+        
+        # what about the 'ordering' of the list?
+        #   ha! we rely on the one that was specified in the 'Action' model
+        #   where? -> the <ordering=('-created')> inside the class 'Meta'
+        pass
+    
+    # ten is enough, lol
+    actions = actions[:10]
+    
     return render(request,
-                  'account/dashboard.html', { 'section': 'dashboard' })
+                  'account/dashboard.html', { 'section': 'dashboard',
+                                              'actions': actions })
 
 
 @login_required
@@ -141,14 +166,14 @@ def user_follow(request):
             if action == 'follow':
                 Contact.objects.get_or_create(user_from=request.user,
                                               user_to=user)
-            
+                
                 create_action(request.user, 'is following', user)
             
             else:
                 Contact.objects.filter(user_from=request.user,
                                        user_to=user).delete()
-                
-            return JsonResponse({'status': 'ok'})
+            
+            return JsonResponse({ 'status': 'ok' })
         
         except User.DoesNotExist:
             return JsonResponse({ 'status': 'ko' })
