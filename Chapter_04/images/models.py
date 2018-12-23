@@ -40,6 +40,9 @@ class Image(models.Model):
     
     created = models.DateField(auto_now_add=True, db_index=True)
     
+    total_likes = models.PositiveIntegerField(db_index=True,
+                                              default=0)
+    
     users_like_for_img = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                                 related_name='images_liked',
                                                 blank=True)
