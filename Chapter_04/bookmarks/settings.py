@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
     'mysite.com',
     'localhost',
     '127.0.0.1',
-    '4744df33.ngrok.io',
+    '475671da.ngrok.io',
 ]
 
 # Application definition
@@ -148,3 +148,11 @@ ABSOLUTE_URL_OVERRIDES = {
     'auth.user': lambda u: reverse_lazy('user_detail',
                                         args=[u.username])
 }
+
+# redis DB stuff
+#   brew install redis
+#   pip3 install redis==2.10.6
+
+REDIS_HOST = 'localhost'
+REDIS_PORT = 6379
+REDIS_DB = 0
