@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
     'mysite.com',
     'localhost',
     '127.0.0.1',
-    '47855119.ngrok.io',
+    '4744df33.ngrok.io',
 ]
 
 # Application definition
