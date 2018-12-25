@@ -19,8 +19,11 @@
 		<div class="image-info">
 			<div>
 				<span class="count">
-					<span class="total">{{ total_likes }} </span>
-					like{{ total_likes|pluralize }}
+					<span class="total">{{ total_likes }} </span> like{{ total_likes|pluralize }}
+				</span>
+
+				<span class="count">
+					{{ total_views }} view{{ total_views|pluralize }}
 				</span>
 
 				<a href="#"
