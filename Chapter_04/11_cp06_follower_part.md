@@ -4,7 +4,7 @@
 - [x] Create an **activity stream** application 
 - [x] Add **generic relations** to models 
 - [x] Optimize ```QuerySets``` for related objects 
-- [ ] Using ```signals``` for ?denormalizing counts 
+- [x] Using ```signals``` for ?denormalizing counts 
 - [ ] Store items in ***Redis***
 
 ----------
