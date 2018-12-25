@@ -2,7 +2,6 @@ from django.urls import path
 
 from . import views
 
-
 app_name = 'images'
 
 urlpatterns = [
@@ -18,4 +17,6 @@ urlpatterns = [
     path('',
          views.image_list, name='list'),
     
+    path('ranking/',
+         views.image_ranking, name='create')
 ]
