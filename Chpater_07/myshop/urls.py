@@ -6,8 +6,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     
-    # This route MUST be put before the 'shop.urls'
+    # These routes MUST be put before the 'shop.urls'
     path('cart/', include('cart.urls', namespace='cart')),
+    path('orders/', include('orders.urls', namespace='orders')),
     
     path('', include('shop.urls', namespace='shop')),
 ]
