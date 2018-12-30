@@ -21,6 +21,10 @@ class Order(models.Model):
     
     paid = models.BooleanField(default=False)
     
+    # Payment-gateway stuff
+    braintree_id = models.CharField(max_length=150,
+                                    blank=True)
+    
     class Meta:
         ordering = ('-created',)
     
