@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
+from .nothinghere import *
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -125,3 +127,22 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 CART_SESSION_ID = 'cart'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# Braintree settings
+#   here: https://www.braintreegateway.com
+
+BRAINTREE_MERCHANT_ID = BRT_MERCHANT_ID
+BRAINTREE_PUBLIC_KEY = BRT_PUBLIC_KEY
+BRAINTREE_PRIVATE_KEY = BRT_PRIVATE_KEY
+
+from braintree import Configuration, Environment
+
+Configuration.configure(
+    # There's another option 'Production'
+    #   Also, it's OKAY that we don't get a auto-completion here :P
+    Environment.Sandbox,
+    
+    BRAINTREE_MERCHANT_ID,
+    BRAINTREE_PUBLIC_KEY,
+    BRAINTREE_PRIVATE_KEY,
+)
