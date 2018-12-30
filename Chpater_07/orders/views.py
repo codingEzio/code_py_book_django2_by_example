@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.urls import reverse
+from django.shortcuts import render, redirect
 
 from .models import OrderItem
 from .forms import OrderCreateForm
@@ -35,8 +36,12 @@ def order_create(request):
                 #   "Apply tasks asynchronously by sending a message."
                 order_created.delay(order.id)
                 
-                return render(request,
-                              'orders/order/created.html', { 'order': order })
+                # Hmm, interesting
+                request.session['order_id'] = order.id
+                
+                # The old is just rendering a (fake, sort-of) page
+                return redirect(reverse('payment:process'))
+            
     else:
         form = OrderCreateForm()
     
