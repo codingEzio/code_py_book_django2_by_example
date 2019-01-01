@@ -129,7 +129,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 CART_SESSION_ID = 'cart'
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# There're more options here (not only these five)
+EMAIL_HOST = EMAIL_HOST
+EMAIL_HOST_USER = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = EMAIL_HOST_PASSWORD
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
 
 # Braintree settings
 #   here: https://www.braintreegateway.com
@@ -137,7 +145,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 BRAINTREE_MERCHANT_ID = BRT_MERCHANT_ID
 BRAINTREE_PUBLIC_KEY = BRT_PUBLIC_KEY
 BRAINTREE_PRIVATE_KEY = BRT_PRIVATE_KEY
-
 
 Configuration.configure(
     # There's another option 'Production'
