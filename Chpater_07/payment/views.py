@@ -1,6 +1,12 @@
+from io import BytesIO
+
 from django.shortcuts import render, get_object_or_404, redirect
+from django.template.loader import render_to_string
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 import braintree
+import weasyprint
 
 from orders.models import Order
 
@@ -28,6 +34,40 @@ def payment_process(request):
             order.braintree_id = result.transaction.id
             
             order.save()
+            
+            # ----- ----- Start of Send PDF by Email ----- -----
+            
+            # Part 1 - create email
+            subject = 'My Shop - Invoice no. {}'.format(order_id)
+            message = 'Please find attached the invoice for ur recent purchase.'
+            
+            # Do make sure the email here
+            #   is the SAME as the one you've conf_ed at the backend!
+            email = EmailMessage(subject,
+                                 message,
+                                 'appleincceo@qq.com',
+                                 [order.email])
+            
+            # Part 2 - generate PDF
+            out = BytesIO()
+            html = render_to_string('orders/order/pdf.html',
+                                    { 'order': order })
+            stylesheets = [
+                weasyprint.CSS(settings.STATIC_ROOT + 'css/pdf.css')
+            ]
+            
+            weasyprint.HTML(string=html).write_pdf(out,
+                                                   stylesheets=stylesheets)
+            
+            # Part 3 - attach PDf file
+            email.attach(
+                'order_{}.pdf'.format(order.id),
+                out.getvalue(),
+                'application/pdf'
+            )
+            email.send()
+            
+            # ----- ----- End of Send PDF by Email ----- -----
             
             return redirect('payment:done')
         
