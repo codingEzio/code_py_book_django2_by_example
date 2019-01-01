@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 from .nothinghere import *
+from braintree import Configuration, Environment
 
 import os
 
@@ -121,6 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
@@ -136,7 +138,6 @@ BRAINTREE_MERCHANT_ID = BRT_MERCHANT_ID
 BRAINTREE_PUBLIC_KEY = BRT_PUBLIC_KEY
 BRAINTREE_PRIVATE_KEY = BRT_PRIVATE_KEY
 
-from braintree import Configuration, Environment
 
 Configuration.configure(
     # There's another option 'Production'
