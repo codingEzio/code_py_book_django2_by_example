@@ -46,10 +46,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 ]
 
+# The orders inside the middlewares is VERY important :D
+#   - Each one might depend on data-set by another one exec_ed previously
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    
+    # this option MUST come after the 'session middleware'
+    #   since the 'Locale' needs to use the "session data" :D
+    'django.middleware.locale.LocaleMiddleware',
+    
+    # the 'locale' one should be put before this :P
     'django.middleware.common.CommonMiddleware',
+    
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -109,7 +118,22 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+
+# This options controls what langs ARE available.
+#   Once you've set this, the project will ONLY support these langs.
+LANGUAGES = (
+    ('en', 'English'),
+    ('zh-hant', 'Traditional Chinese'),
+)
+
+# Original: en-us
+LANGUAGE_CODE = 'en'
+
+# You could name multiple paths,
+#   the path appears first have the HIGHEST precedence.
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale/')
+)
 
 TIME_ZONE = 'UTC'
 
