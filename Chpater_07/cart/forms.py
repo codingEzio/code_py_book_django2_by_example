@@ -19,11 +19,11 @@ class CartAddProductForm(forms.Form):
             True    #NOTE this one is related to 'cart/cart.py/Cart/add'
             False   #TODO notes needed (p420)
     """
-
+    
     quantity = forms.TypedChoiceField(choices=PRODUCT_QUANTITY_CHOICES,
                                       coerce=int,
                                       label=_('Quantity'))
-
+    
     update = forms.BooleanField(required=False,
                                 initial=False,
                                 widget=forms.HiddenInput)
