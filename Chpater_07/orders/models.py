@@ -4,6 +4,8 @@ from django.db import models
 from django.core.validators import (MinValueValidator,
                                     MaxValueValidator)
 
+from django.utils.translation import gettext_lazy as _
+
 from shop.models import Product
 from coupons.models import Coupon
 
@@ -11,15 +13,18 @@ from coupons.models import Coupon
 class Order(models.Model):
     """
         Store the order details (& coupon)
+        
+        Add trans-marker by
+            xx.XXField(_('THE MARKER'), ORIGINAL_STUFF)
     """
     
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    email = models.EmailField()
+    first_name = models.CharField(_('first name'), max_length=50)
+    last_name = models.CharField(_('last name'), max_length=50)
+    email = models.EmailField(_('e-mail'))
     
-    city = models.CharField(max_length=100)
-    address = models.CharField(max_length=250)
-    postal_code = models.CharField(max_length=20)
+    city = models.CharField(_('city'), max_length=100)
+    address = models.CharField(_('address'), max_length=250)
+    postal_code = models.CharField(_('postal code'), max_length=20)
     
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
