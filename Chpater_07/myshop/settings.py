@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 from .nothinghere import *
 from braintree import Configuration, Environment
 
+from django.utils.translation import gettext_lazy as _
+
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -122,8 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # This options controls what langs ARE available.
 #   Once you've set this, the project will ONLY support these langs.
 LANGUAGES = (
-    ('en', 'English'),
-    ('zh-hant', 'Traditional Chinese'),
+    ('en', _('English')),
+    ('zh-hant', _('Traditional Chinese')),
 )
 
 # Original: en-us
