@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-02 23:01+0800\n"
+"POT-Creation-Date: 2019-01-03 13:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,14 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: cart/forms.py:25
+msgid "Quantity"
+msgstr ""
+
+#: coupons/forms.py:7
+msgid "Coupon"
+msgstr ""
+
 #: myshop/settings.py:127
 msgid "English"
 msgstr "英語"
@@ -25,3 +33,28 @@ msgstr "英語"
 #: myshop/settings.py:128
 msgid "Traditional Chinese"
 msgstr "正體中文"
+
+#: shop/templates/shop/base.html:8 shop/templates/shop/base.html:15
+msgid "My shop"
+msgstr ""
+
+#: shop/templates/shop/base.html:24
+msgid "Your cart"
+msgstr ""
+
+#: shop/templates/shop/base.html:28
+#, python-format
+msgid ""
+"\n"
+"\t\t\t\t\t\t%(total_items)s item%(total_items_plural)s,\n"
+"\t\t\t\t\t                      $%(total_price)s\n"
+"\t\t\t\t\t"
+msgstr ""
+
+#: shop/templates/shop/base.html:36
+msgid "Your cart is empty."
+msgstr ""
+
+#: shop/templates/shop/product/detail.html:31
+msgid "Add to cart"
+msgstr ""
