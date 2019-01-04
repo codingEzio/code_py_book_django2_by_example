@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'coupons.apps.CouponsConfig',
     
     'rosetta',
+    'parler',
     
     'django.contrib.admin',
     'django.contrib.auth',
@@ -139,12 +140,23 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale/'),
 )
 
-
 USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
 TIME_ZONE = 'UTC'
+
+# Module settings :: django-parler
+PARLER_LANGUAGES = {
+    None     : (
+        { 'code': 'en' },
+        { 'code': 'zh-Hant' },
+    ),
+    'default': {
+        'fallback'         : 'en',
+        'hide_untranslated': False,  # It controls whether it (e.g. 'My Shop' | zh-Hant) appears or not.
+    }
+}
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
