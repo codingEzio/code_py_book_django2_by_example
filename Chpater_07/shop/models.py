@@ -1,19 +1,28 @@
 from django.db import models
 from django.urls import reverse
 
+from parler.models import TranslatableModel, TranslatedFields
 
-class Category(models.Model):
+
+class Category(TranslatableModel):
     """
     
     """
     
-    name = models.CharField(max_length=200,
-                            db_index=True)
-    slug = models.SlugField(max_length=200,
-                            unique=True)
+    translations = TranslatedFields(
+        name=models.CharField(max_length=200, db_index=True),
+        slug=models.SlugField(max_length=200, unique=True),
+    )
     
     class Meta:
-        ordering = ('name',)
+        """
+            For those "translated" fields, it can be
+                no longer do 'ordering' by override the attrs in class `Meta`.
+            
+            We'll comment that line for now :D
+        """
+        
+        # ordering = ('name',)
         verbose_name = 'category'
         verbose_name_plural = 'categories'
     
@@ -25,7 +34,7 @@ class Category(models.Model):
         return self.name
 
 
-class Product(models.Model):
+class Product(TranslatableModel):
     """
     
     """
@@ -34,13 +43,15 @@ class Product(models.Model):
                                  related_name='products',
                                  on_delete=models.CASCADE)
     
-    name = models.CharField(max_length=200, db_index=True)
-    slug = models.SlugField(max_length=200, db_index=True)
+    translations = TranslatedFields(
+        name=models.CharField(max_length=200, db_index=True),
+        slug=models.SlugField(max_length=200, db_index=True),
+        description=models.TextField(blank=True),
+    )
     
     image = models.ImageField(upload_to='products/%Y/%m/%d',
                               blank=True)
     
-    description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     
     available = models.BooleanField(default=True)
@@ -49,8 +60,16 @@ class Product(models.Model):
     updated = models.DateTimeField(auto_now=True)
     
     class Meta:
-        ordering = ('name',)
-        index_together = (('id', 'slug'),)
+        """
+            Same thing (translated-fields :: can-no-longer-use-ordering)
+                applies to this `Product` model (we'll comment this for now)
+            
+            And the `index_together`.
+                It (django-parlor) does not support this right now :D
+        """
+        
+        # ordering = ('name',)
+        # index_together = (('id', 'slug'),)
     
     def get_absolute_url(self):
         return reverse('shop:product_detail',
