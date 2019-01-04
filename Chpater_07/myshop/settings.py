@@ -150,7 +150,7 @@ TIME_ZONE = 'UTC'
 PARLER_LANGUAGES = {
     None     : (
         { 'code': 'en' },
-        { 'code': 'zh-Hant' },
+        { 'code': 'zh-hant' },
     ),
     'default': {
         'fallback'         : 'en',
