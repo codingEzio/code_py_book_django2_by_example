@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-03 13:50+0800\n"
-"PO-Revision-Date: 2019-01-03 09:40+0000\n"
-"Last-Translator: b'  <383138191@qq.com>'\n"
+"POT-Creation-Date: 2019-01-04 11:33+0800\n"
+"PO-Revision-Date: 2019-01-04 03:54+0000\n"
+"Last-Translator: b'alex alex <383138191@qq.com>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -27,13 +27,46 @@ msgstr "Quantity"
 msgid "Coupon"
 msgstr "Coupon"
 
-#: myshop/settings.py:127
+#: myshop/settings.py:129
 msgid "English"
 msgstr "English"
 
-#: myshop/settings.py:128
+#: myshop/settings.py:130
 msgid "Traditional Chinese"
 msgstr "Traditional Chinese"
+
+#: myshop/urls.py:13
+msgid "admin/"
+msgstr "admin/"
+
+#: myshop/urls.py:16
+msgid "cart/"
+msgstr "cart/"
+
+#: myshop/urls.py:17
+msgid "orders/"
+msgstr "orders/"
+
+#: myshop/urls.py:18
+msgid "payment/"
+msgstr "payment/"
+
+#: myshop/urls.py:19
+#| msgid "Coupon"
+msgid "coupons/"
+msgstr "coupons/"
+
+#: payment/urls.py:10
+msgid "process/"
+msgstr "process/"
+
+#: payment/urls.py:13
+msgid "done/"
+msgstr "done/"
+
+#: payment/urls.py:16
+msgid "canceled/"
+msgstr "canceled/"
 
 #: shop/templates/shop/base.html:8 shop/templates/shop/base.html:15
 msgid "My shop"
