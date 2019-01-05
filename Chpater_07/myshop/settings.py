@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     
     'rosetta',
     'parler',
+    'localflavor',
     
     'django.contrib.admin',
     'django.contrib.auth',
