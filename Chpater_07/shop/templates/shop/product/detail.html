@@ -10,7 +10,7 @@
 
 	<div class="product-detail">
 		<img src="  {% if product.image %}
-						{{ product.name }}
+						{{ product.image.url }}
 					{% else %}
 						{% static "img/no_image.png" %}
 					{% endif %}"
