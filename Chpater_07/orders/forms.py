@@ -2,10 +2,13 @@ from django import forms
 
 from .models import Order
 
+from localflavor.us.forms import USZipCodeField
+
 
 class OrderCreateForm(forms.ModelForm):
     """
-    
+        Example code (localflavor):
+            postal_code = USZipCodeField()
     """
     
     class Meta:
