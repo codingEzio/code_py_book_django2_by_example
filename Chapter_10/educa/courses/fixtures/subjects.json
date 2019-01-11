@@ -1,0 +1,96 @@
+[
+{
+    "model": "courses.subject",
+    "pk": 1,
+    "fields": {
+        "title": "Software Engineering",
+        "slug": "software-engineering"
+    }
+},
+{
+    "model": "courses.subject",
+    "pk": 2,
+    "fields": {
+        "title": "Computer Science",
+        "slug": "computer-science"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 1,
+    "fields": {
+        "owner": 1,
+        "subject": 1,
+        "title": "Project Management",
+        "slug": "project-management",
+        "overview": "Introduction to Project Management.",
+        "created": "2019-01-11T07:37:36.801Z"
+    }
+},
+{
+    "model": "courses.course",
+    "pk": 2,
+    "fields": {
+        "owner": 1,
+        "subject": 2,
+        "title": "Introduction to Computer Systems",
+        "slug": "introduction-computer-systems",
+        "overview": "An introduction to Computer Systems.",
+        "created": "2019-01-11T07:41:28.729Z"
+    }
+},
+{
+    "model": "courses.module",
+    "pk": 1,
+    "fields": {
+        "course": 1,
+        "title": "intro :: p1",
+        "description": "intro :: part 01"
+    }
+},
+{
+    "model": "courses.module",
+    "pk": 2,
+    "fields": {
+        "course": 1,
+        "title": "intro :: p2",
+        "description": "intro :: part 02"
+    }
+},
+{
+    "model": "courses.module",
+    "pk": 3,
+    "fields": {
+        "course": 1,
+        "title": "intro :: p3",
+        "description": "intro :: part 03"
+    }
+},
+{
+    "model": "courses.module",
+    "pk": 4,
+    "fields": {
+        "course": 2,
+        "title": "intro :: p1",
+        "description": "intro :: part 01"
+    }
+},
+{
+    "model": "courses.module",
+    "pk": 5,
+    "fields": {
+        "course": 2,
+        "title": "intro :: p2",
+        "description": "intro :: part 02"
+    }
+},
+{
+    "model": "courses.module",
+    "pk": 6,
+    "fields": {
+        "course": 2,
+        "title": "intro :: p3",
+        "description": "intro :: part 03"
+    }
+}
+]
