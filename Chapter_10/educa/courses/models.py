@@ -77,8 +77,14 @@ class Content(models.Model):
         
         For the `GenericForeignKey` part
             `ForeignKey`                a fk field to ContentType model
-            `PositiviteIntegerField`    store the pk of the related object
+            `PositiveIntegerField`    store the pk of the related object
             `item`                      combine the 2 prev fields (as GFK)
+        
+        ----- ----- -----
+        
+        The newly added `limit_choices_to`
+            does limit < the objs that can be used for generic relationship >
+            the values inside would be the lowercase version of the classnames :D
     """
     
     module          = models.ForeignKey(Module,
@@ -86,7 +92,52 @@ class Content(models.Model):
                                         on_delete=models.CASCADE)
     
     content_type    = models.ForeignKey(ContentType,
-                                        on_delete=models.CASCADE)
+                                        on_delete=models.CASCADE,
+                                        limit_choices_to={
+                                            'model__in': (
+                                                'text', 'video',
+                                                'image', 'file',
+                                            )
+                                        })
     
     object_id       = models.PositiveIntegerField()
     item            = GenericForeignKey('content_type', 'object_id')
+    
+    
+# ---- Content related ----
+
+class ItemBase(models.Model):
+    """
+        Since this model is an 'abstract' one.
+            No table will be created in the database.
+    """
+    
+    owner   = models.ForeignKey(User,
+                                related_name='%(class)s_related',
+                                on_delete=models.CASCADE)
+    title   = models.CharField(max_length=250)
+    
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        abstract = True
+        
+    def __str__(self):
+        return self.title
+    
+
+class Text(ItemBase):
+    content = models.TextField()
+
+
+class File(ItemBase):
+    file    = models.FileField(upload_to='files')
+
+
+class Image(ItemBase):
+    image   = models.ImageField(upload_to='images')
+
+
+class Video(ItemBase):
+    video   = models.URLField()
