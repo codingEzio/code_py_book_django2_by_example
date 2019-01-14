@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes.fields import GenericForeignKey
 
 class Subject(models.Model):
     """
@@ -65,3 +67,26 @@ class Module(models.Model):
     
     def __str__(self):
         return self.title
+    
+    
+class Content(models.Model):
+    """
+        Two parts
+            1. A normal foreign-key that pointing to `Module`
+            2. A generic foreign-key (#TODO what does it do?)
+        
+        For the `GenericForeignKey` part
+            `ForeignKey`                a fk field to ContentType model
+            `PositiviteIntegerField`    store the pk of the related object
+            `item`                      combine the 2 prev fields (as GFK)
+    """
+    
+    module          = models.ForeignKey(Module,
+                                        related_name='contents',
+                                        on_delete=models.CASCADE)
+    
+    content_type    = models.ForeignKey(ContentType,
+                                        on_delete=models.CASCADE)
+    
+    object_id       = models.PositiveIntegerField()
+    item            = GenericForeignKey('content_type', 'object_id')
