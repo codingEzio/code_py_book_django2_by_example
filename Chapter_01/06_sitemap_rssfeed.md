@@ -1,7 +1,6 @@
 
-### Foreword 
-- We'll add **sitemap** for our site :P 
-- and 
+### Add **sitemap** for our site :P 
+- Aha
 
 ----- 
 

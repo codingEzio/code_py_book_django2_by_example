@@ -1,7 +1,6 @@
 
-### TOC of adding new feature (***full-text search***)  
-- setup of PostgreSQL
-- 
+### New feature: ***full-text search***. 
+- Aha.
 
 ---------- 
 

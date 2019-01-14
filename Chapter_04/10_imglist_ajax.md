@@ -3,7 +3,6 @@
 - [x] we’ll add the ```pagination``` (powered by **AJAX**)
 - [ ] detailed notes for this part (***paging***)
 
-
 ------- 
 
 ### HowTo

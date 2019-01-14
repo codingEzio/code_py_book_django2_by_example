@@ -44,15 +44,17 @@
     3. it should be a simple UI for the images for the current page (not fully impl yet)
     
 ### We let js do some of the stuff for us 
-- ```javascript
-    jQuery('#bookmarklet').hide();
+- Here it is
 
-    window.open(site_url + 'images/create/?url='
-        + encodeURIComponent(selected_image)
-        + '&title='
-        + encodeURIComponent(jQuery('title').text()),
-        + '_blank'
-    );
+    ```javascript
+        jQuery('#bookmarklet').hide();
+    
+        window.open(site_url + 'images/create/?url='
+            + encodeURIComponent(selected_image)
+            + '&title='
+            + encodeURIComponent(jQuery('title').text()),
+            + '_blank'
+        );
     ```
 
 ### The page that users'll be redirected 

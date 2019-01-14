@@ -2,7 +2,9 @@
 
 
 ### Type these cmds to get started 
-- ```python
+- Here it is 
+    
+    ```
        from django.contrib.auth.models import User
        from blog.models import Post
         

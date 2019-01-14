@@ -5,7 +5,7 @@
 - [x] Add **generic relations** to models 
 - [x] Optimize ```QuerySets``` for related objects 
 - [x] Using ```signals``` for ?denormalizing counts 
-- [ ] Store items in ***Redis***
+- [x] Store items in ***Redis***
 
 ----------
 

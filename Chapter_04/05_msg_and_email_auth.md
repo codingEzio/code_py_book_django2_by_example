@@ -49,12 +49,12 @@
             - simply rewriting those two functions 
             - aka ```authenticate()``` and ```get_user()```
     - Two values under ```settings.py```
-        - ```python
+        ```
              AUTHENTICATION_BACKENDS = [
                   'django.contrib.auth.backends.ModelBackend',
                   'account.authentication.EmailAuthBackend',
             ]
-            ```
+        ```
         - Oh! The orders for the values inside the ```AUTHENTICATION_BACKENDS``` **DO matters**!
             - If the 1st one is okay to go, then it'll stop there :P
     - Now you could still **log in** just like before,

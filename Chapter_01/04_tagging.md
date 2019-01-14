@@ -20,7 +20,8 @@
         
 ### Let the ***tag*** SHINE 😂 ! (**display-only**)
 - Type ```./manage.py shell``` (shell-of-Django)
-    - ```python
+    
+    ```
         from blog.models import Post
  
         post = Post.objects.get(id=1)
@@ -29,7 +30,8 @@
         post.tags.remove('music')
         
         post.tags.all()
-        ```
+    ```
+
 - Now you **could** go check the admin-page 
     - You'd be able to see the effect of ***tag*** & its related posts :P 
 - Okay! Now let's edit the ```list.html``` for **displaying**! 
