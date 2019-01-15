@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
+from .fields import OrderField
+
+
 class Subject(models.Model):
     """
         Hierarchy
@@ -55,7 +58,11 @@ class Course(models.Model):
 
 class Module(models.Model):
     """
-    
+        ( Same thing applies to `Content` )
+        
+        The newly added `order` means that
+            | the order for a new module will be assigned
+            | by adding 1 to the last module of the same `Course` object
     """
     
     course      = models.ForeignKey(Course,
@@ -65,15 +72,21 @@ class Module(models.Model):
     title       = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     
+    order       = OrderField(blank=True,
+                             for_fields=['course'])
+
+    class Meta:
+        ordering = ['order']
+        
     def __str__(self):
-        return self.title
+        return '{}. {}'.format(self.order, self.title)
     
     
 class Content(models.Model):
     """
         Two parts
             1. A normal foreign-key that pointing to `Module`
-            2. A generic foreign-key (#TODO what does it do?)
+            2. A generic foreign-key (for the detailed sub content models)
         
         For the `GenericForeignKey` part
             `ForeignKey`                a fk field to ContentType model
@@ -85,6 +98,12 @@ class Content(models.Model):
         The newly added `limit_choices_to`
             does limit < the objs that can be used for generic relationship >
             the values inside would be the lowercase version of the classnames :D
+        
+        ----- ----- -----
+        
+        The newly added `order` means that
+            | the order for a new content will be assigned
+            | by adding 1 to the last content of the same `Module` object
     """
     
     module          = models.ForeignKey(Module,
@@ -102,6 +121,12 @@ class Content(models.Model):
     
     object_id       = models.PositiveIntegerField()
     item            = GenericForeignKey('content_type', 'object_id')
+    
+    order           = OrderField(blank=True,
+                                 for_fields=['module'])
+    
+    class Meta:
+        ordering = ['order']
     
     
 # ---- Content related ----
