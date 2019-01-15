@@ -6,6 +6,9 @@ from django.views.generic.edit import (CreateView,
                                        UpdateView,
                                        DeleteView)
 
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
+
 from .models import Course
 
 
@@ -39,12 +42,16 @@ class OwnerEditMixin(object):
         return super(OwnerEditMixin, self).form_valid(form)
 
 
-class OwnerCourseMixin(OwnerMixin):
-    """ Ah, we've saved 3-lines typing by inheriting the mixin!
-        That is, restricting objects that belong to the current user.
+class OwnerCourseMixin(OwnerMixin, LoginRequiredMixin):
+    """
+        The first mixin is used to
+            restricting objects that belong to the current user.
     """
     
-    model = Course
+    model       = Course
+    
+    fields      = ['subject', 'title', 'slug', 'overview']
+    success_url = reverse_lazy('manage_course_list')
 
 
 class OwnerCourseEditMixin(OwnerCourseMixin, OwnerEditMixin):
@@ -69,23 +76,37 @@ class ManageCourseListView(OwnerCourseMixin, ListView):
     template_name   = 'courses/manage/course/list.html'
 
 
-class CourseCreateView(OwnerCourseEditMixin, CreateView):
-    """ Features like { scope(user), model, validate-redirect } & Dj's view
+class CourseCreateView(PermissionRequiredMixin,
+                       OwnerCourseEditMixin,
+                       CreateView):
     """
-    pass
-
-
-class CourseUpdateView(OwnerCourseEditMixin, UpdateView):
-    """ Features like { scope(user), model, validate-redirect } & Dj's view
+        These are included:
+            scope(user), model, validate-redirect & the related view of Dj's.
     """
-    pass
+    
+    permission_required = 'courses.add_course'
 
 
-class CourseDeleteView(OwnerCourseMixin, DeleteView):
+class CourseUpdateView(PermissionRequiredMixin,
+                       OwnerCourseEditMixin,
+                       UpdateView):
+    """
+        These are included:
+            scope(user), model, validate-redirect & the related view of Dj's.
+    """
+    
+    permission_required = 'courses.change_course'
+
+
+class CourseDeleteView(PermissionRequiredMixin,
+                       OwnerCourseMixin,
+                       DeleteView):
     """
         OwnerCourseMixin    restrict scope(user) & naming model(Course)
         DeleteView          page for displaying 'del-confirm' & 'del-success'
     """
     
-    template_name   = 'courses/manage/course/delete.html'
-    success_url     = reverse_lazy('manage_course_list')
+    template_name       = 'courses/manage/course/delete.html'
+    success_url         = reverse_lazy('manage_course_list')
+    
+    permission_required = 'courses.delete_course'
