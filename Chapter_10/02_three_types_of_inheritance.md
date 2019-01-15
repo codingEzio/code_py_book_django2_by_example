@@ -36,6 +36,7 @@
 
 ### A brief summary for these ways of *inheriting*
 - All needs to *subclassing* its parent classes.
+    - Oh, there's a better version at [here](https://kapeli.com/dash_share?docset_file=Django&docset_name=Django%202.1.3&path=doc/topics/db/models.html%23model-inheritance&platform=django&repo=Versioned%20Main&version=2.1.3) btw.
 - Code changes 
 
     | TYPE | PARENT | CHILDREN | 
