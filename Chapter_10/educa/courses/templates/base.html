@@ -1,0 +1,53 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title> {% block title %} Educa {% endblock %} </title>
+	<link rel="stylesheet" href="{% static "css/base.css" %}">
+</head>
+
+<body>
+
+<div id="header">
+	<a href="/" class="logo">Educa</a>
+
+	<ul class="menu">
+		{% if request.user.is_authenticated %}
+			<li><a href="{% url "logout" %}">Sign out</a></li>
+		{% else %}
+			<li><a href="{% url "login" %}">Sign in</a></li>
+		{% endif %}
+	</ul>
+</div>
+
+<div id="content">
+	{% block content %}
+	{% endblock %}
+</div>
+
+
+<!--
+    The actual link should be
+        https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
+-->
+<script src="http://localhost:9000/jq321.js">
+	/*
+		What if you don't get network access?
+            1. `cd` to the folder that placing the jQuery lib file
+            2. Run `python3 http.server 9000`
+            3. Replace the url with `http://localhost:9000/THE_FILE`
+	*/
+</script>
+
+<script>
+    $(document).ready(function () {
+        {% block domready %}
+        {% endblock %}
+    })
+</script>
+
+</body>
+
+</html>
