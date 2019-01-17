@@ -240,7 +240,7 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
                                         course__owner=request.user)
 
         # urls.py :: <model_name>
-        self.model = self.get_model(model_name)
+        self.model  = self.get_model(model_name)
 
         # urls.py :: <id>
         if id:
@@ -273,8 +273,8 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
         
         # Add an 'user' before saving
         if form.is_valid():
-            obj = form.save(commit=False)
-            obj.owner = request.user
+            obj         = form.save(commit=False)
+            obj.owner   = request.user
             obj.save()
             
             # This option indicates the opt (create | update)
@@ -303,3 +303,13 @@ class ContentDeleteView(View):
         content.delete()
         
         return redirect('module_content_list', module.id)
+    
+    
+class ModuleContentListView(TemplateResponseMixin, View):
+    template_name = 'courses/manage/module/content_list.html'
+    
+    def get(self, request, module_id):
+        module = get_object_or_404(Module, id=module_id,
+                                   course__owner=request.user)
+        
+        return self.render_to_response({'module'    : module})
