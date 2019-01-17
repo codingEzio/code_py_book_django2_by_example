@@ -1,3 +1,6 @@
+from django.forms.models import modelform_factory
+from django.apps import apps
+
 from django.urls import reverse_lazy
 from django.shortcuts import redirect, get_object_or_404
 
@@ -12,7 +15,7 @@ from django.views.generic.edit import (CreateView,
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
 
-from .models import Course
+from .models import Course, Content, Module
 from .forms import ModuleFormSet
 
 
@@ -152,3 +155,136 @@ class CourseModuleUpdateView(TemplateResponseMixin, View):
         
         return self.render_to_response({'course'    : self.course,
                                         'formset'   : formset})
+    
+    
+class ContentCreateUpdateView(TemplateResponseMixin, View):
+    """ This view is corresponding to two url patterns.
+        - one for 'module_content_create'
+        - one for 'module_content_update'
+        
+        With ID     ->  update
+        Without ID  ->  create
+    """
+    
+    module          = None
+    model           = None
+    obj             = None
+    template_name   = 'courses/manage/content/form.html'
+    
+    def get_model(self, model_name):
+        """
+            Return the actual model (one of four)
+                while excluding some of them (we don't need)
+        """
+        
+        if model_name in ['text', 'video', 'image', 'file']:
+            return apps.get_model(app_label='courses',
+                                  model_name=model_name)
+        
+        return None
+    
+    def get_form(self, model, *args, **kwargs):
+        """
+            As the name of `modelform_factory` suggests,
+                it simply "produces" the fields (of 'text | video | image | file').
+                
+            We'll exclude some fields (e.g. `owner`) ,
+                as we only need stuff like `title`, `video` etc.
+                
+                Details
+                    Content     order
+                    ItemBase    owner, created, updated
+        """
+        
+        Form = modelform_factory(model, exclude=['owner',
+                                                 'order',
+                                                 'created',
+                                                 'updated'])
+        
+        return Form(*args, **kwargs)
+    
+    def dispatch(self, request, module_id, model_name, id=None):
+        """
+            Here's what the <Django-doc> says
+            
+                The default implementation will
+                -  inspect the HTTP method and
+                -  attempt to delegate to a method that matches one of them.
+                
+            So from my understanding,
+                it might be a pre-setup for the incoming `GET`, `POST` ?
+                
+            ----- ----- -----
+            
+            Q
+                Oh, where're these params come from?
+                I mean, the `module_id`, `model_name` kind of thing?
+            A
+                Well, it lives in <urls.py> (as placeholder).
+                e.g. "module/<int:module_id>/content/<model_name>/<id>/"
+                
+            ----- ----- -----
+            
+            Quotes from the book
+            
+                It receives the URL params and
+                    stores the { module, model, content-obj } as class attrs.
+                    
+                module_id   the module's ID (the content'll be associated with)
+                model_name  the content's model-name (create | update)
+                id | obj    the ID of the object that is being updated
+        """
+        
+        # urls.py :: <int:module_id>
+        self.module = get_object_or_404(Module, id=module_id,
+                                        course__owner=request.user)
+
+        # urls.py :: <model_name>
+        self.model = self.get_model(model_name)
+
+        # urls.py :: <id>
+        if id:
+            self.obj = get_object_or_404(self.model, id=id,
+                                         owner=request.user)
+            
+        return super(ContentCreateUpdateView,
+                     self).dispatch(request, module_id, model_name, id)
+    
+    def get(self, request, module_id, model_name, id=None):
+        """
+            #TODO further explanation needed
+            Build the model-form for the ['text', 'video', 'image', 'file'].
+        """
+        
+        form = self.get_form(self.model, instance=self.obj)
+        
+        return self.render_to_response({'form'      : form,
+                                        'object'    : self.obj})
+    
+    def post(self, request, module_id, model_name, id=None):
+        """
+            #TODO further explanation needed
+        """
+        
+        # Build form with submitted data :D
+        form = self.get_form(self.model, instance=self.obj,
+                             data=request.POST,
+                             files=request.FILES)
+        
+        # Add an 'user' before saving
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.owner = request.user
+            obj.save()
+            
+            # This option indicates the opt (create | update)
+            if not id:
+                Content.objects.create(module=self.module,
+                                       item=obj)
+            
+            # Done here if 'create'
+            return redirect('module_content_list', self.module.id)
+        
+        # Done here if 'update'
+        return self.render_to_response({'form'      : form,
+                                        'object'    : self.obj})
