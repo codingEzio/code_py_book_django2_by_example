@@ -1,0 +1,23 @@
+### Almight *aliases*
+
+- Install => ```requirements.txt```
+    - ```addreq: aliased to f() {  pip3 install $1 && pip freeze > requirements.txt && clear && bat requirements.txt; };f```
+- Simply **shorter**
+    - ```alias tc="touch "```
+    - ```alias wl="wc -l "```
+- Integrated as *One*
+    - ```alias mkd='md() {  touch "$1.md" && open "$1.md" };md'```
+    - ```alias mkdr='mkcd() { mkdir -p "$1" && cd "$1" }; mkcd'```
+- Intuitive aliases for built-in cmds
+    - ```alias real="cd $(pwd -P); "```
+    - ```alias fword="grep -rnw '.' -e "```
+- Intuitive aliases for Django cmds
+    - meta
+        - ```alias djma="./manage.py "```
+        - ```alias djapp="django-admin startapp "```
+        - ```alias djproj="django-admin startproject "``` <small>( **educa/educa/** )</small>
+    - non-meta
+        - ```alias djmakemig="./manage.py makemigrations"```
+        - ```alias djmig="./manage.py migrate "```
+        - ```alias djserve="./manage.py runserver "```
+        - ```alias djnewadmin="./manage.py createsuperuser"```

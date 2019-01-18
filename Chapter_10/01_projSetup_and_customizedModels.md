@@ -5,20 +5,8 @@
     - For those *weird* words, just go check **the aliases** previously defined.
 
 ### Basic setup
-- one cmd for *install-then-add-requirements*
-    - ```addreq: aliased to f() {  pip3 install $1 && pip freeze > requirements.txt && clear && bat requirements.txt; };f```
-- aliases for Django commands
-    - meta
-        - ```alias djproj="django-admin startproject "``` <small>( **educa/educa/** )</small>
-        - ```alias djapp="django-admin startapp "```
-        - ```alias djma="python ./manage.py "```
-    - non-meta
-        - ```alias djnewadmin="./manage.py createsuperuser"```
-        - ```alias djserve="./manage.py runserver "```
-        - ```alias djmakemig="./manage.py makemigrations"```
-        - ```alias djmig="./manage.py migrate "```
-- aliases for some often-used cmds
-    - ```alias fword="grep -rnw '.' -e "```
+- aliases 
+    - GO check this file: ```00_aliases_that_make_ur_life_easier.md```
 - modules
     - ```addreq Django==2.0.5```
     - ```addreq Pillow==5.1.0```
