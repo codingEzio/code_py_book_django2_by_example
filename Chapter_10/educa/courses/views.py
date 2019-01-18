@@ -8,6 +8,7 @@ from django.views.generic.base import (View,
                                        TemplateResponseMixin)
 
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import (CreateView,
                                        UpdateView,
                                        DeleteView)
@@ -15,7 +16,9 @@ from django.views.generic.edit import (CreateView,
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
 
-from .models import Course, Content, Module
+from django.db.models import Count
+
+from .models import Course, Content, Module, Subject
 from .forms import ModuleFormSet
 
 
@@ -313,3 +316,30 @@ class ModuleContentListView(TemplateResponseMixin, View):
                                    course__owner=request.user)
         
         return self.render_to_response({'module'    : module})
+    
+    
+class CourseListView(TemplateResponseMixin, View):
+    model           = Course
+    template_name   = 'courses/course/list.html'
+    
+    def get(self, request, subject=None):
+        
+        # ?alias
+        subjects    = Subject.objects.annotate(total_courses=Count('courses'))
+        courses     = Course.objects.annotate(total_modules=Count('modules'))
+        
+        if subject:
+            # if a subject slug URL param is given :D
+            
+            subject = get_object_or_404(Subject, slug=subject)
+            courses = courses.filter(subject=subject)
+            
+        return self.render_to_response({'subjects'  : subjects,
+                                        'subject'   : subject,
+                                        'courses'   : courses})
+    
+
+class CourseDetailView(DetailView):
+    model           = Course
+    template_name   = 'courses/course/detail.html'
+    
