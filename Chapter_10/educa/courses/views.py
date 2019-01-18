@@ -19,7 +19,9 @@ from django.contrib.auth.mixins import (LoginRequiredMixin,
 from django.db.models import Count
 
 from .models import Course, Content, Module, Subject
+
 from .forms import ModuleFormSet
+from students.forms import CourseEnrollForm
 
 
 class OwnerMixin(object):
@@ -343,3 +345,16 @@ class CourseDetailView(DetailView):
     model           = Course
     template_name   = 'courses/course/detail.html'
     
+    def get_context_data(self, **kwargs):
+        """
+            Add the 'enroll' button (form, FFS) to the 'course-overview' page
+        """
+        
+        context     = super(CourseDetailView,
+                            self).get_context_data(**kwargs)
+        
+        context['enroll_form'] = CourseEnrollForm(
+                initial={'course': self.object}
+        )
+        
+        return context
