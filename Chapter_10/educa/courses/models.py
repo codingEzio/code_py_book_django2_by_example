@@ -35,6 +35,8 @@ class Course(models.Model):
         The `subject` (fk) points to the subject (superclass, sort of).
             Later, the `course` itself will be pointed by `Module` (part).
     """
+
+    # ----- ----- ----- -----
     
     owner       = models.ForeignKey(User,
                                     related_name='courses_created',
@@ -48,6 +50,12 @@ class Course(models.Model):
     
     overview    = models.TextField()
     created     = models.DateTimeField(auto_now_add=True)
+    
+    # ----- ----- ----- -----
+    
+    students    = models.ManyToManyField(User,
+                                         related_name='courses_joined',
+                                         blank=True)
     
     class Meta:
         ordering = ['-created', ]
