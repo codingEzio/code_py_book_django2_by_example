@@ -122,6 +122,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# For the 'content' stuff
+#   URL     base URL to serve the media files
+#   ROOT    the files being uploaded to :D
+MEDIA_URL   = '/media/'
+MEDIA_ROOT  = os.path.join(BASE_DIR, 'media/')
 
 # Homepage
 from django.urls import reverse_lazy
