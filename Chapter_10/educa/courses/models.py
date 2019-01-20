@@ -4,6 +4,9 @@ from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes.fields import GenericForeignKey
 
+from django.template.loader import render_to_string
+from django.utils.safestring import mark_safe
+
 from .fields import OrderField
 
 
@@ -143,6 +146,15 @@ class ItemBase(models.Model):
     """
         Since this model is an 'abstract' one.
             No table will be created in the database.
+            
+        Oh btw, the contents for specific modules were
+            accessed like this `module.contents.all` (all the data in the `Content` DB)
+            
+            Content     module      contents
+            >> Model    >> Field    >> related_name
+            
+            The templates which are using this
+                located at 'app-students/templates/students/course/detail.html'
     """
     
     owner   = models.ForeignKey(User,
@@ -158,6 +170,25 @@ class ItemBase(models.Model):
         
     def __str__(self):
         return self.title
+    
+    def render(self):
+        """
+            This function itself rendered FOUR templates at needed.
+                Here's the location 'app-courses/templates/courses/content/'.
+                
+            Do note that
+                the 'item' here is tightly connected with models down below :D
+            
+                Examples
+                    video.html      {% video item.video "small" %}
+                    image.html      {{ item.image.url }}
+                    file.html       {{ item.file.url }}
+                    text.html       {{ item.content|linebreaks|safe }}
+                
+        """
+        
+        return render_to_string('courses/content/{}.html'.format(self._meta.model_name),
+                                {'item': self})
     
 
 class Text(ItemBase):
