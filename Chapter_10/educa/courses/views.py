@@ -338,17 +338,51 @@ class CourseListView(TemplateResponseMixin, View):
         subjects    = cache.get('all_subjects')
         
         if not subjects:
+            
+            # e.g.  <Subject: Computer Science>
             subjects = Subject.objects.annotate(total_courses=Count('courses'))
+            
             cache.set('all_subjects', subjects)
             
         
-        courses     = Course.objects.annotate(total_modules=Count('modules'))
+        # e.g. <Course: System Design with UML>
+        all_courses = Course.objects.annotate(total_modules=Count('modules'))
+        
         
         if subject:
-            # if a subject slug URL param is given :D
+            # If the `slug` param was given
+            #   filtering the courses of specific subject
             
+            # localhost:8000/?name=course_list
+            # localhost:8000/course/subject/software-engineering/  (this one)
             subject = get_object_or_404(Subject, slug=subject)
-            courses = courses.filter(subject=subject)
+            
+            # The '..' is NOT restricted
+            #   since it only meant to separating 'course-by-subject' from 'courses-all'.
+            key     = 'subject_{}_courses'.format(subject.id)
+            
+            courses = cache.get(key)
+            
+            if not courses:
+                
+                # Filtering courses by 'subject'
+                #   it's kinda clean since we've pre-queried (i.e. `all_courses`)
+                courses = all_courses.filter(subject=subject)
+                
+                cache.set(key, courses)
+        
+        else:
+            # If there's no `slug` param
+            #   It simply gets all the courses,
+            #   we could directly use it since we've queried above :D
+            
+            courses = cache.get('all_courses')
+            
+            if not courses:
+                courses = all_courses
+                
+                cache.set('all_courses', courses)
+                
             
         return self.render_to_response({'subjects'  : subjects,
                                         'subject'   : subject,
