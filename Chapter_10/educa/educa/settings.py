@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     
     'embed_video',
     'memcache_status',
+    'rest_framework',
 ]
 
 # Cache configuration
@@ -41,6 +42,7 @@ CACHES = {
 # CACHE_MIDDLEWARE_ALIAS = 'default'
 # CACHE_MIDDLEWARE_SECONDS = 60 * 15
 # CACHE_MIDDLEWARE_KEY_PREFIX = 'educa'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,3 +132,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Homepage
 LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
+
+# REST framework configuration
+#   all its settings lived in here
+#   here's the doc: https://www.django-rest-framework.org/api-guide/settings/
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnnoReadOnly',
+    ]
+}
