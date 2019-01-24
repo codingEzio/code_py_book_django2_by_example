@@ -2,7 +2,12 @@ import os
 from django.urls import reverse_lazy
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+#   The <BASE_DIR> points to the same folder-level as `manage.py`
+BASE_DIR = os.path.dirname(os.path.dirname(
+    os.path.abspath(
+        os.path.join(__file__, os.pardir)  # os.pardir: a/b/z/.. -> a/b/
+    )
+))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '@_bqlcv*i&no*0yum_e6emk%3&2@qn+a+@zlyrf1_2z!tphun&'
